@@ -42,7 +42,7 @@ void BinaryTree::insert(string key, node *leaf) {
 void BinaryTree::insert(string key){
 	if(root != NULL){
 		insert(key, root);
-		cout << key << "mphka!" << endl;
+		cout << key << endl;
 	}else{
 		root = new node;
 		root->value = key;
