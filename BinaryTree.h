@@ -5,6 +5,7 @@ using namespace std;
 
 struct node{
 	string value;
+	int app;
 	node *left;
 	node *right;
 };
@@ -28,7 +29,8 @@ public:
 private:
 	void destroy_tree(node *leaf);
 	void insert(string key, node *leaf);
-	node *search(string key, node *leaf);
+	//node *search(string key, node *leaf);
+    node *search(node *node, string key);
 	void inorder_print(node *leaf);
     void postorder_print(node *leaf);
 	void preorder_print(node *leaf);
