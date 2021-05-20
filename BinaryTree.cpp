@@ -24,6 +24,7 @@ void BinaryTree::insert(string key, node *leaf) {
         } else {
             leaf->left = new node;
             leaf->left->value = key;
+            leaf->left->app = 1;
             leaf->left->left = NULL;
             leaf->left->right = NULL;
         }
@@ -33,6 +34,7 @@ void BinaryTree::insert(string key, node *leaf) {
         } else {
             leaf->right = new node;
             leaf->right->value = key;
+            leaf->right->app = 1;
             leaf->right->right = NULL;
             leaf->right->left = NULL;
         }
@@ -40,18 +42,23 @@ void BinaryTree::insert(string key, node *leaf) {
 }
 
 void BinaryTree::insert(string key){
-	if(root != NULL){
-		insert(key, root);
-		cout << key << endl;
-	}else{
-		root = new node;
-		root->value = key;
-		root->left = NULL;
-		root->right = NULL;
-	}
+    if(root != NULL){
+        node *temp = search(key);
+        if (temp == NULL)
+            insert(key, root);
+        else{
+            temp->app++;
+        }
+    }else{
+        root = new node;
+        root->value = key;
+        root->app = 1;
+        root->left = NULL;
+        root->right = NULL;
+    }
 }
 
-node *BinaryTree::search(string key, node *leaf){
+/*node *BinaryTree::search(string key, node *leaf){
 	if(leaf != NULL){
 		if(key == leaf->value){
 			return leaf;
@@ -69,6 +76,35 @@ node *BinaryTree::search(string key, node *leaf){
 
 node *BinaryTree::search(string key){
 	return search(key, root);
+}*/
+
+node * BinaryTree::search(node *node, string key)
+{
+    // The given key is-
+    // not found in BST
+    if (node == NULL)
+        return NULL;
+        // The given key is found
+    else if(node->value == key)
+        return node;
+        // The given is greater than
+        // current node's key
+    else if(node->value < key)
+        return search(node->right, key);
+        // The given is smaller than
+        // current node's key
+    else
+        return search(node->left, key);
+}
+
+node *BinaryTree::search(string key){
+    // Invoking Search() operation
+    // and passing root node
+    node * result = search(root, key);
+
+    // If key is found, returns TRUE
+    // otherwise returns FALSE
+    return result;
 }
 
 void BinaryTree::destroy_tree(){
@@ -83,7 +119,7 @@ void BinaryTree::inorder_print(){
 void BinaryTree::inorder_print(node *leaf){
 	if(leaf != NULL){
 		inorder_print(leaf->left);
-		cout << leaf->value << ",";
+		cout << leaf->value << ": "<< leaf->app << ",";
 		inorder_print(leaf->right);
 	}
 }
