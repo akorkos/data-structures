@@ -1,69 +1,64 @@
 #include "UnsortedArray.h"
 #include <iostream>
 
-UnsortedArray::UnsortedArray() {
-    array = NULL;
+UnsortedArray::UnsortedArray(int size) {
+    this->size = size;
+    posOfLastElement = 0;
+    array = new Element[size];
+    for (int i = 0; i < size; i++){
+        array[i].word = " ";
+        array[i].appearances = 0;
+    }
 }
-
-/*
-UnsortedArray::UnsortedArray(int k) {
-
-}
-*/
 
 UnsortedArray::~UnsortedArray() {
-
+    delete[] array;
 }
 
-Element *UnsortedArray::search(Element *array, int n, string key) {
-    int i;
-    for (i = 0; i < n; i++)
-        if (array->word == key){
-            return array;
-        }
-
-    return NULL;
+int UnsortedArray::search(string key) {
+    int pos = -1;
+    for (int i = 0; i < size && pos == -1; i++){
+        if (array[i].word == key)
+            pos = i;
+    }
+    //if (pos!=-1)
+    //    cout << array[pos].word << ": " << array[pos].appearances << endl;
+    return pos;
 }
 
 // Inserts a key in Array->word a of given capacity.
 // n is current size of Array *a. This
 // function returns n + 1 if insertion
 // is successful, else n.
-int UnsortedArray::insert(Element *array, int n, string key, int capacity)
-{
-
-    // Cannot insert more elements if n is
-    // already more than or equal to capcity
-    if (n >= capacity)
-        return n;
-
-   // arr[n] = key;
-    array->word = key;
-    array->appearances = 1;
-
-    return (n + 1);
+void UnsortedArray::insert(string key){
+    if (posOfLastElement < size){
+        int pos = search(key);
+        if (pos == -1){
+            posOfLastElement++;
+            array[posOfLastElement].word = key;
+            array[posOfLastElement].appearances = 1;
+        }else
+            array[pos].appearances++;
+    }
 }
 
-//koita auto me appearances
-int UnsortedArray::deleteElement(Element *array, int n, string key){
-
-    // Find position of element to be deleted
-  //  int pos = search(current, n, key);
-
-    Element *newElement = search(array, n, key);
-    if (newElement==NULL)
-    {
-        cout << "Element not found";
-        return n;
+void UnsortedArray::remove(string key){
+    int pos = search(key);
+    if (pos != -1){
+        if (array[pos].appearances > 1)
+            array[pos].appearances--;
+        else if (array[pos].appearances == 1 || array[pos].appearances == 0){
+            size--;
+            for (int i = pos; i < size; i++)
+                array[i] = array[i+1];
+        }
     }
+}
 
+int UnsortedArray::getSize() {
+    return posOfLastElement;
+}
 
-    // Deleting element
-   else{
-
-   }
-   // for (i = pos; i < n - 1; i++)
-     //   arr[i] = arr[i + 1];
-
-    return n - 1;
+string UnsortedArray::getArray(int i) {
+    return array[i].word;
 }

@@ -10,20 +10,18 @@ struct Element{
 };
 
 class UnsortedArray {
-public:
-    UnsortedArray();
-    //UnsortedArray(int);
-    ~UnsortedArray();
-
-    Element *array;
-
-    int insert(Element *array, int n, string key, int capacity);
-    Element *search(Element *array, int n, string key);
-    int deleteElement(Element *previousElement, int n, string key);
-
 private:
-
+    int posOfLastElement;
+    int size;
+    Element *array;
+public:
+    UnsortedArray(int size);
+    ~UnsortedArray();
+    void insert(string key);
+    int search(string key);
+    void remove(string key);
+    int getSize();
+    string getArray(int i);
 };
 
-
-#endif //DOMES_DEDOMENWN_2021_UNSORTEDARRAY_H
+#endif
