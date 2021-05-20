@@ -20,16 +20,26 @@ int wordCounter(string filename){
     return count;
 }
 
+void removeSpaces(char *str)
+{
+    // To keep track of non-space character count
+    int count = 0;
+
+    // Traverse the given string. If current character
+    // is not space, then place it at index 'count++'
+    for (int i = 0; str[i]; i++)
+        if (str[i] != ' ')
+            str[count++] = str[i]; // here count is
+    // incremented
+    str[count] = '\0';
+}
+
 int main() {
     string filename = "test.txt";
-    //int i = 0,
     int k;
     string word;
     fstream file;
-    string t = "\000";
-   // int N = wordCounter(filename);
-   // string *Array = new string[N];
-
+    int pos;
     file.open(filename.c_str());
 
     BinaryTree b;
@@ -40,10 +50,19 @@ int main() {
             while (!(word[j] >= 'a' && word[j] <= 'z' || word[j] == '\0')) { //des ti fash me : ktl na mi menoyn kena
                 for (k = j; word[k] != '\0'; k++)
                     word[k] = word[k + 1];
+
                 word[k] = '\0';
             }
+            if (word[j] != ' ')
+                pos = j;
         }
+       word.resize(pos+1);
+       /*if (word[word.length()-1] == ' ')
+           word.resize(word.length()-2);*/
+
         b.insert(word);
+
+
        // Array[i++] = word;
     }
    b.deleteNode(b.root, "a");
