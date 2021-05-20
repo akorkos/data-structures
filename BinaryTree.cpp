@@ -8,6 +8,7 @@ BinaryTree::~BinaryTree(){
 	destroy_tree();
 }
 
+//might not be needed
 void BinaryTree::destroy_tree(node *leaf){
 	if(leaf != NULL){
 		destroy_tree(leaf->left);
@@ -58,26 +59,6 @@ void BinaryTree::insert(string key){
     }
 }
 
-/*node *BinaryTree::search(string key, node *leaf){
-	if(leaf != NULL){
-		if(key == leaf->value){
-			return leaf;
-		}
-		if(key < leaf->value){
-			return search(key, leaf->left);
-		}else{
-			return search(key, leaf->right);
-		}
-	}else{
-		return NULL;
-	}
-}
-
-
-node *BinaryTree::search(string key){
-	return search(key, root);
-}*/
-
 node * BinaryTree::search(node *node, string key)
 {
     // The given key is-
@@ -85,8 +66,10 @@ node * BinaryTree::search(node *node, string key)
     if (node == NULL)
         return NULL;
         // The given key is found
-    else if(node->value == key)
+    else if(node->value == key){
+        cout<<"Word \""<<node->value<<"\" with "<<node->app<<" appearances"<<endl;
         return node;
+    }
         // The given is greater than
         // current node's key
     else if(node->value < key)
