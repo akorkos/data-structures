@@ -1,0 +1,36 @@
+\documentclass[a4paper,twoside,12pt]{book}
+\usepackage[margin=1.2in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[greek,english]{babel}
+\usepackage{alphabeta}
+\usepackage{amsthm}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage[parfill]{parskip}
+\newtheorem{SampleEnv}{Παράδειγμα}[section]
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=magenta,
+}
+\titleformat{\chapter}{\normalfont\huge}{\thechapter. }{20pt}{\huge\it}
+\foreignlanguage{greek}
+
+\begin{document}
+\renewcommand*\contentsname{Περιεχόμενα}
+
+\tableofcontents
+
+\renewcommand{\labelenumii}{\Roman{enumii}}
+\input Array
+\input SortedArray
+\input BST
+\input AVL
+\input Hash
+
+\end{document}
