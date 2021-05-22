@@ -2,18 +2,17 @@
 #define SORTEDARRAY_H
 #include "UnsortedArray.h"
 
-struct Element{
-    string word;
-    int appearances;
-};
-
-class SortedArray: UnsortedArray{
+class SortedArray{
 private:
     Element *array;
     int posOfLastElement, size;
+    int search(string key);
+    int insert(string key, bool &found);
 public:
     SortedArray(int size);
     ~SortedArray();
-    int search(string key);
+    void insert(string key);
+    bool search(string key, int &apps);
+    bool remove(string key);
 };
 #endif
