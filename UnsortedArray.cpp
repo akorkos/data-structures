@@ -1,8 +1,7 @@
 #include "UnsortedArray.h"
-#include <iostream>
 
 UnsortedArray::UnsortedArray(int size) {
-    this->size = size;
+    this->size=size;
     posOfLastElement = 0;
     array = new Element[size];
     for (int i = 0; i < size; i++){
@@ -17,19 +16,13 @@ UnsortedArray::~UnsortedArray() {
 
 int UnsortedArray::search(string key) {
     int pos = -1;
-    for (int i = 0; i < size && pos == -1; i++){
+    for (int i = 0; i < posOfLastElement && pos == -1; i++){
         if (array[i].word == key)
             pos = i;
     }
-    //if (pos!=-1)
-    //    cout << array[pos].word << ": " << array[pos].appearances << endl;
     return pos;
 }
 
-// Inserts a key in Array->word a of given capacity.
-// n is current size of Array *a. This
-// function returns n + 1 if insertion
-// is successful, else n.
 void UnsortedArray::insert(string key){
     if (posOfLastElement < size){
         int pos = search(key);
@@ -42,23 +35,26 @@ void UnsortedArray::insert(string key){
     }
 }
 
-void UnsortedArray::remove(string key){
+bool UnsortedArray::remove(string key){
     int pos = search(key);
     if (pos != -1){
         if (array[pos].appearances > 1)
             array[pos].appearances--;
-        else if (array[pos].appearances == 1 || array[pos].appearances == 0){
-            size--;
-            for (int i = pos; i < size; i++)
+        else if (array[pos].appearances == 1){
+            posOfLastElement--;
+            for (int i = pos; i < posOfLastElement; i++)
                 array[i] = array[i+1];
         }
-    }
+        return true;
+    }else
+        return false;
 }
 
-int UnsortedArray::getSize() {
-    return posOfLastElement;
-}
-
-string UnsortedArray::getArray(int i) {
-    return array[i].word;
+bool UnsortedArray::search(string key, int &apps) {
+    int pos = search(key);
+    if (pos != -1){
+        apps = array[pos].appearances;
+        return true;
+    }else
+        return false;
 }

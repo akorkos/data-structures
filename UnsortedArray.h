@@ -1,7 +1,6 @@
 #ifndef UNSORTEDARRAY_H
 #define UNSORTEDARRAY_H
 #include <string>
-
 using namespace std;
 
 struct Element{
@@ -10,18 +9,15 @@ struct Element{
 };
 
 class UnsortedArray {
-private:
-    int posOfLastElement;
-    int size;
+protected:
     Element *array;
+    int posOfLastElement, size;
+    int search(string key);
 public:
     UnsortedArray(int size);
     ~UnsortedArray();
     void insert(string key);
-    int search(string key);
-    void remove(string key);
-    int getSize();
-    string getArray(int i);
+    bool search(string key, int &apps);
+    bool remove(string key);
 };
-
 #endif
