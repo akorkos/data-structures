@@ -1,40 +1,33 @@
 #include <iostream>
-
+#include <string>
 using namespace std;
 
-
 struct node{
-	string value;
-	int app;
-	node *left;
-	node *right;
+    string word;
+    int appearances;
+    node *parent;
+    node *left;
+    node *right;
 };
 
-class BinaryTree{
-public:
-	BinaryTree();
-	~BinaryTree();
-
-	void insert(string key);
-	node *search(string key);
-	void destroy_tree();
-	void inorder_print();
-	void postorder_print();
-	void preorder_print();
-    void deleteNode(node*& root, string key);
-    void searchKey(node* &curr, string key, node* &parent);
-    node& remove(string val, node* parentNode);
-    node *root;
-
+class BinarySearchTree{
 private:
-	void destroy_tree(node *leaf);
-	void insert(string key, node *leaf);
-	//node *search(string key, node *leaf);
-    node *search(node *node, string key);
-	void inorder_print(node *leaf);
-    void postorder_print(node *leaf);
-	void preorder_print(node *leaf);
+    node *root;
+    bool insert(node *rt, string key);
+    node *search(string key);
+    //bool remove(node *rt);
+    node *minimum(node *rt);
+    void inOrder(node *pos);
+    void preOrder(node *pos);
+    void postOrder(node *pos);
+    void destroy(node *rt);
+public:
+    BinarySearchTree();
+    ~BinarySearchTree();
+    bool insert(string key);
+    bool search(string key, int &apps);
+    //bool remove(string key);
+    void printInOrder();
+    void printPreOrder();
+    void printPostOrder();
 };
-
-
-
