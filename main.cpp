@@ -1,10 +1,15 @@
 #include <iostream>
 #include <fstream>
 
-#include "BinaryTree.h"
+#include "UnsortedArray.h"
+#include "SortedArray.h"
+#include "BinarySearchTree.h"
+#include "AVLTree.h"
+#include "HashTable.h"
 
 using namespace std;
 
+//Method that counts the number of words in the file.
 int wordCounter(string filename){
     string word;
     fstream file;
@@ -20,60 +25,47 @@ int wordCounter(string filename){
     return count;
 }
 
-void removeSpaces(char *str)
-{
-    // To keep track of non-space character count
-    int count = 0;
-
-    // Traverse the given string. If current character
-    // is not space, then place it at index 'count++'
-    for (int i = 0; str[i]; i++)
-        if (str[i] != ' ')
-            str[count++] = str[i]; // here count is
-    // incremented
-    str[count] = '\0';
-}
-
 int main() {
-    string filename = "test.txt";
-    int k;
-    string word;
+     //open and read file
+    string filename = "test.txt"; //"small-file.txt";
+    string word; //each word from file
     fstream file;
-    int pos;
     file.open(filename.c_str());
 
-    BinaryTree b;
+    int numberOfWords = wordCounter(filename);
 
-   while (file >> word){
-        for (int j = 0;  word[j] != '\0'; j++) {
-            word[j] = tolower(word[j]);
-            while (!(word[j] >= 'a' && word[j] <= 'z' || word[j] == '\0')) { //des ti fash me : ktl na mi menoyn kena
-                for (k = j; word[k] != '\0'; k++)
-                    word[k] = word[k + 1];
+    //create each data structure
+    UnsortedArray *unArr = new UnsortedArray(numberOfWords);
+    //!!!!!!ERROR!!!!!!!! SortedArray *sorArr = new SortedArray(numberOfWords);
+    BinarySearchTree *bst = new BinarySearchTree();
+    AVLTree *avl = new AVLTree();
+    HashTable *table = new HashTable();
 
-                word[k] = '\0';
+    //insert words from file to each data structure
+    while (file >> word){
+        int  len=word.size();
+        //καθαρισμός της λέξης από σύμβολα
+        for (int i = 0; i <len; i++)
+        {
+            word[i] = tolower(word[i]); //we set all characters to lower, in order to control the strings easier
+            if (!(word[i]>='a' && word[i]<='z'))
+            {
+                //αν είναι τον διαγράφω
+                word.erase(i--, 1);
+                //επαναπροσδιορίζω το μήκος της συμβολοσειράς
+                len = word.size();
             }
-            if (word[j] != ' ')
-                pos = j;
         }
-       word.resize(pos+1);
-       /*if (word[word.length()-1] == ' ')
-           word.resize(word.length()-2);*/
 
-        b.insert(word);
-
-
-       // Array[i++] = word;
+        //insert word in each data structure
+        unArr->insert(word);
+        bst->insert(word);
+        table->insert(word);
     }
-   b.deleteNode(b.root, "a");
-   b.inorder_print();
+    //b.remove("a");
+    bst->printInOrder();
 
     file.close();
-
-   /*
-    for (i = 0; i < N; i++)
-        cout << Array[i] << endl;
-        */
 
     return 0;
 }
