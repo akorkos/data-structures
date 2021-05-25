@@ -1,12 +1,11 @@
 #ifndef HASHMAP_H
 #define HASHMAP_H
-#include <iostream>
 #include <string>
 
 using namespace std;
 
 struct HashNode{
-    string value;
+    string word;
     int address;
     int appearances;
 };
@@ -19,7 +18,8 @@ public:
     ~HashTable();
 
     void insert(string key);
-    int search(string key);
+    HashNode* search(string key);
+    HashNode **getRoot(){return root;}
 
 private:
     int findAddress(string key);

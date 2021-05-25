@@ -14,7 +14,6 @@ class BinarySearchTree{
 private:
     node *root;
     bool insert(node *rt, string key);
-    node *search(string key);
     bool remove(node *rt);
     node *minimum(node *rt);
     void inOrder(node *pos);
@@ -26,8 +25,10 @@ public:
     ~BinarySearchTree();
     bool insert(string key);
     bool search(string key, int &apps);
+    node *search(string key);
     bool remove(string key);
     void printInOrder();
     void printPreOrder();
     void printPostOrder();
+    node *getRoot(){return root;}
 };

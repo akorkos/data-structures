@@ -72,68 +72,68 @@ node *BinarySearchTree::search(string key){
 }
 
 bool BinarySearchTree::remove(node *rt){
-  node *parent = rt->parent;
-  /*
-  if (rt == nullptr) //Warning: condition is always false
-    return false;
-  */
-  if (rt->left == nullptr && rt->right == nullptr){
-    if (parent == nullptr){
-      delete(rt);
-      root = nullptr;
-    }
-    else if (parent->left == rt){
-      if (rt->appearances == 1){
-        delete (parent->left);
-        parent->left = nullptr;
-      } else
-        rt->appearances--;
-    }
-    else {
-      if (rt->appearances == 1){
-        delete (parent->right);
-        parent->right = nullptr;
-      } else
-        rt->appearances--;
-    }
-  } else if (rt->left == nullptr || rt->right == nullptr){
-    if (parent == nullptr){
-      if (rt->left == nullptr)
-        root = rt->right;
-      else
-        root = rt->left;
-      delete (rt);
-    } else if (parent->left == rt){
-      if (rt->left == nullptr)
-        parent->left = rt->right;
-      else
-        parent->left = rt->left;
-      delete (rt);
+    node *parent = rt->parent;
+    /*
+    if (rt == nullptr) //Warning: condition is always false
+      return false;
+    */
+    if (rt->left == nullptr && rt->right == nullptr){
+        if (parent == nullptr){
+            delete(rt);
+            root = nullptr;
+        }
+        else if (parent->left == rt){
+            if (rt->appearances == 1){
+                delete (parent->left);
+                parent->left = nullptr;
+            } else
+                rt->appearances--;
+        }
+        else {
+            if (rt->appearances == 1){
+                delete (parent->right);
+                parent->right = nullptr;
+            } else
+                rt->appearances--;
+        }
+    } else if (rt->left == nullptr || rt->right == nullptr){
+        if (parent == nullptr){
+            if (rt->left == nullptr)
+                root = rt->right;
+            else
+                root = rt->left;
+            delete (rt);
+        } else if (parent->left == rt){
+            if (rt->left == nullptr)
+                parent->left = rt->right;
+            else
+                parent->left = rt->left;
+            delete (rt);
+        } else {
+            if (rt->left == nullptr)
+                parent->right = rt->right;
+            else
+                parent->right = rt->left;
+            delete (rt);
+        }
     } else {
-      if (rt->left == nullptr)
-        parent->right = rt->right;
-      else
-        parent->right = rt->left;
-      delete (rt);
+        node *successor = minimum(rt->right);
+        if (rt->appearances == 1){
+            rt->word = successor->word;
+            rt->appearances = successor->appearances;
+            remove(successor);
+        } else
+            rt->appearances--;
     }
-  } else {
-    node *successor = minimum(rt->right);
-    if (rt->appearances == 1){
-      rt->word = successor->word;
-      rt->appearances = successor->appearances;
-      remove(successor);
-    } else
-      rt->appearances--;
-  }
     return true;
 }
 
 bool BinarySearchTree::remove(string key){
-  node *hasChild = search(key);
-  if (hasChild == nullptr)
-    return false;
-  else
-    return remove(hasChild);
+    node *hasChild = search(key);
+    if (hasChild == nullptr)
+        return false;
+    else
+        return remove(hasChild);
 }
 
 node *BinarySearchTree::minimum(node *rt){
@@ -181,8 +181,8 @@ void BinarySearchTree::printPostOrder(){
     postOrder(root);
 }
 
-void BinarySearchTree::destroy(node *rt){
-    if (rt != nullptr){
+void BinarySearchTree::destroy(node *rt) {
+    if (rt != nullptr) {
         destroy(rt->left);
         destroy(rt->right);
         delete (rt);

@@ -16,7 +16,6 @@ class AVLTree{
 private:
     Node *root;
     Node *insert(Node* rt, string key);
-    Node *search(string key);
     Node *remove(Node *rt, string key);
     Node *rRR(Node *rt);
     Node *rLR(Node *rt);
@@ -34,9 +33,11 @@ private:
 public:
     AVLTree();
     ~AVLTree();
+
+    Node *getRoot(){return root;}
     void insert(string key);
     void remove(string key);
-    bool search(string key, int &apps);
+    Node *search(string key);
     void printInOrder();
     void printPreOrder();
     void printPostOrder();

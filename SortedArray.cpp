@@ -1,7 +1,6 @@
 #include "SortedArray.h"
 
 SortedArray::SortedArray(int size){
-    this->size = size;
     posOfLastElement = 0;
     array = new Element[size];
     for (int i = 0; i < size; i++){
@@ -19,7 +18,7 @@ int SortedArray::search(string key) {
     while (first <= last) {
         int mid = (first + last) / 2;
         if (array[mid].word == key)
-            return mid;
+            return array[mid].appearances;
         if (array[mid].word < key)
             first = mid + 1;
         else
@@ -90,5 +89,3 @@ bool SortedArray::remove(string key) {
     }else
         return false;
 }
-
-

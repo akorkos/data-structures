@@ -25,28 +25,28 @@ int HashTable::findAddress(string key) {
 void HashTable::insert(string key) {
     int step = findAddress(key);
 
-    while ((root[step] != nullptr) && (root[step]->value != key)) {
+    while ((root[step] != nullptr) && (root[step]->word != key)) {
         step++;
         step %= size;
     }
     if (root[step] == nullptr) {
         root[step] = new HashNode;
         root[step]->address = step;
-        root[step]->value = key;
+        root[step]->word = key;
         root[step]->appearances = 1;
     } else if (root[step]->address == step) {
         root[step]->appearances++;
     }
 }
 
-int HashTable::search(string key) {
+HashNode* HashTable::search(string key) {
     int step = findAddress(key);
-    while ((root[step] != nullptr) && (root[step]->value != key)) {
+    while ((root[step] != nullptr) && (root[step]->word != key)) {
         step++;
         step %= size;
     }
     if (root[step]->address == step)
-        return root[step]->appearances;
+        return root[step];
     else
-        return 0;
+        return nullptr;
 }

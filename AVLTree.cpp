@@ -9,7 +9,7 @@ AVLTree::~AVLTree() {
 }
 
 void AVLTree::insert(string key) {
-     root = insert(root, key);
+    root = insert(root, key);
 }
 
 Node* AVLTree::insert(Node* rt, string key) {
@@ -33,16 +33,6 @@ Node* AVLTree::insert(Node* rt, string key) {
     }
     return rt;
 }
-
-bool AVLTree::search(string key, int &apps) {
-    Node *pos = search(key);
-    if (pos == nullptr){
-        apps = 0;
-        return false;
-    } else {
-        apps = pos->appearances;
-        return true;
-    }}
 
 Node *AVLTree::search(string key) {
     Node *pos = root;
