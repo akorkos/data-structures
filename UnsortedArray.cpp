@@ -1,7 +1,7 @@
 #include "UnsortedArray.h"
 
-UnsortedArray::UnsortedArray(int size) {
-    this->size = size;
+UnsortedArray::UnsortedArray() {
+    size = 1000;
     posOfLastElement = 0;
     array = new Element[size];
     for (int i = 0; i < size; i++) {
@@ -14,29 +14,18 @@ UnsortedArray::~UnsortedArray() {
     delete[] array;
 }
 
-//returns position
-int UnsortedArray::search(string key, int position) {
-    int pos = position;
+int UnsortedArray::search(string key) {
+    int pos = -1;
     for (int i = 0; i < posOfLastElement && pos == -1; i++) {
-        if (array[i].word == key) {
+        if (array[i].word == key)
             pos = i;
-        }
     }
     return pos;
 }
 
-//returns appearances
-int UnsortedArray::search(string key) {
-    int pos = search(key, -1);
-    if (pos != -1) {
-        return array[pos].appearances;
-    }
-    return -1;
-}
-
 void UnsortedArray::insert(string key) {
     if (posOfLastElement < size) {
-        int pos = search(key, -1);
+        int pos = search(key);
         if (pos == -1) {
             posOfLastElement++;
             array[posOfLastElement].word = key;
@@ -44,6 +33,8 @@ void UnsortedArray::insert(string key) {
         } else
             array[pos].appearances++;
     }
+    if (posOfLastElement == size)
+        resize();
 }
 
 bool UnsortedArray::remove(string key) {
@@ -61,7 +52,22 @@ bool UnsortedArray::remove(string key) {
         return false;
 }
 
-/*
+void UnsortedArray::resize() {
+    size *= 2;
+    Element *tmp = new Element[size];
+    for (int i = 0; i < size; i++){
+        if (i <= posOfLastElement){
+            tmp[i].word = array[i].word;
+            tmp[i].appearances = array[i].appearances;
+        } else {
+            tmp[i].word = " ";
+            tmp[i].appearances = 0;
+        }
+    }
+    delete[] array;
+    array = tmp;
+}
+
 bool UnsortedArray::search(string key, int &apps) {
     int pos = search(key);
     if (pos != -1) {
@@ -70,4 +76,3 @@ bool UnsortedArray::search(string key, int &apps) {
     } else
         return false;
 }
- */

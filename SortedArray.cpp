@@ -1,6 +1,7 @@
 #include "SortedArray.h"
 
-SortedArray::SortedArray(int size){
+SortedArray::SortedArray(){
+    size = 1000;
     posOfLastElement = 0;
     array = new Element[size];
     for (int i = 0; i < size; i++){
@@ -62,6 +63,8 @@ void SortedArray::insert(string key) {
         array[j].word = key;
         array[j].appearances = 1;
         posOfLastElement++;
+        if (posOfLastElement == size)
+            resize();
     }
 }
 
@@ -88,4 +91,20 @@ bool SortedArray::remove(string key) {
         return true;
     }else
         return false;
+}
+
+void SortedArray::resize() {
+        size *= 2;
+        Element *tmp = new Element[size];
+        for (int i = 0; i < size; i++){
+            if (i <= posOfLastElement){
+                tmp[i].word = array[i].word;
+                tmp[i].appearances = array[i].appearances;
+            } else {
+                tmp[i].word = " ";
+                tmp[i].appearances = 0;
+            }
+        }
+        delete[] array;
+        array = tmp;
 }
