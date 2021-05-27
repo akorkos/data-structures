@@ -35,7 +35,6 @@ public:
     AVLTree();
     ~AVLTree();
 
-    Node *getRoot(){return root;} //επιστροφή private πεδίου root
     void insert(string key); //εισαγωγή λέξης στο AVL Tree
     void remove(string key); //διαγραφή κόμβου με τη λέξη key
     int search(string key, int apps); //αναζήτηση κόμβου με τη λέξη key

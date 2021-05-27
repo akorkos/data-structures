@@ -25,21 +25,20 @@ void timeNeededForSearch(string *q, X dataStructure, string structure, int numbe
         }
     }
     auto stop = std::chrono::high_resolution_clock::now();
-    auto duration = (stop - start); //auto duration = duration_cast<std::chrono::microseconds>(stop-start);
+    auto duration = (stop - start);
     cout << endl << "The time needed for the search in " << structure << " was: " << duration.count() << " microseconds"
          << endl;
 }
 
-
 int main() {
     //άνοιγμα και διάβασμα αρχείου
-    string filename = "test.txt"; //!!! change into "small-file.txt"; !!!!
-    string word; //each word from file
+    string filename = "small-file.txt";
+    string word; //κάθε λέξη του αρχείου
     fstream file;
     file.open(filename.c_str());
 
     //Σύνολο Q τυχαίων λέξεων που ζητείται
-    string *q = new string[100];//!!!!!change into 1000!!!
+    string *q = new string[1000];
     int qIndex = 0;
 
     //Δημιουργία κάθε δομής δεδομένων
@@ -63,7 +62,7 @@ int main() {
         }
 
         //δημιουργία συνόλου Q
-        if (rand() % 2 && qIndex < 100) { //!!!!!change into 1000!!!
+        if (rand() % 2 && qIndex < 1000) {
             q[qIndex] = word;
             qIndex++;
         }
@@ -80,22 +79,19 @@ int main() {
     //αναζήτησης της κάθε δομής & πόσες φορές εμφανίζεται η κάθε λέξη
 
     //UnsortedArray
-    //timeNeededForSearch(q, unArr, "Unsorted Array", qIndex);
+    timeNeededForSearch(q, unArr, "Unsorted Array", qIndex);
 
     //SortedArray
     timeNeededForSearch(q, sorArr, "Sorted Array", qIndex);
 
     //BinarySearchTree
-    //timeNeededForSearch(q, bst, "Binary Search Tree", qIndex);
+    timeNeededForSearch(q, bst, "Binary Search Tree", qIndex);
 
     //AVLTree
-    //timeNeededForSearch(q, avl, "AVL Tree", qIndex);
+    timeNeededForSearch(q, avl, "AVL Tree", qIndex);
 
     //HashTable
-    //timeNeededForSearch(q, table, "HashTable", qIndex);
-
-    //bst->remove(""); //an den kanw auto, uparxei kenos kombos
-    bst->printInOrder();
+    timeNeededForSearch(q, table, "HashTable", qIndex);
 
     //κλέισιμο αρχείου
     file.close();

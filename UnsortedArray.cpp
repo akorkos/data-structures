@@ -60,13 +60,9 @@ void UnsortedArray::insert(string key) {
 bool UnsortedArray::remove(string key) {
     int pos = search(key);
     if (pos != -1) {
-        if (array[pos].appearances > 1)
-            array[pos].appearances--;
-        else if (array[pos].appearances == 1) {
-            posOfLastElement--;
-            for (int i = pos; i < posOfLastElement; i++)
-                array[i] = array[i + 1];
-        }
+        posOfLastElement--;
+        for (int i = pos; i < posOfLastElement; i++)
+            array[i] = array[i + 1];
         return true;
     } else
         return false;
@@ -80,8 +76,8 @@ bool UnsortedArray::remove(string key) {
 void UnsortedArray::resize() {
     size *= 2;
     Element *tmp = new Element[size];
-    for (int i = 0; i < size; i++){
-        if (i <= posOfLastElement){
+    for (int i = 0; i < size; i++) {
+        if (i <= posOfLastElement) {
             tmp[i].word = array[i].word;
             tmp[i].appearances = array[i].appearances;
         } else {

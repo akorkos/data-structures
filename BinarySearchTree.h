@@ -30,5 +30,4 @@ public:
     void printInOrder();
     void printPreOrder();
     void printPostOrder();
-    node *getRoot(){return root;} //επιστροφή private πεδίου root
 };

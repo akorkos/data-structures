@@ -15,6 +15,5 @@ public:
     void insert(string key); // μέθοδος που εισάγει την λέξη στο πίνακα
     int search(string key, int apps); // μέθοδος που αναζητά μια λέξη μέσα από τον πίνακα
     bool remove(string key); // μέθοδος για την διαγραφή μιας λέξης μέσα από τον πίνακα
-    // Element *getArray(){return array;}
 };
 #endif
