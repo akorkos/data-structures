@@ -5,15 +5,14 @@ using namespace std;
 struct node{
     string word;
     int appearances;
-    node *parent;
-    node *left;
-    node *right;
+    node *parent, *left, *right;
 };
 
 class BinarySearchTree{
 private:
     node *root;
-    bool insert(node *rt, string key);
+    node *insert(node *rt, string key);
+    node *search(string key);
     bool remove(node *rt);
     node *minimum(node *rt);
     void inOrder(node *pos);
@@ -23,12 +22,10 @@ private:
 public:
     BinarySearchTree();
     ~BinarySearchTree();
-    bool insert(string key);
+    void insert(string key);
     bool search(string key, int &apps);
-    node *search(string key);
     bool remove(string key);
     void printInOrder();
     void printPreOrder();
     void printPostOrder();
-    node *getRoot(){return root;}
 };

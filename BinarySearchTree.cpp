@@ -6,7 +6,7 @@ BinarySearchTree::BinarySearchTree(){
 BinarySearchTree::~BinarySearchTree(){
     destroy(root);
 }
-bool BinarySearchTree::insert(string key){
+void BinarySearchTree::insert(string key){
     if (root == nullptr){
         root = new node;
         root->word = key;
@@ -14,15 +14,14 @@ bool BinarySearchTree::insert(string key){
         root->parent = nullptr;
         root->right = nullptr;
         root->left = nullptr;
-        return true;
     } else
-        return insert(root, key);
+        root = insert(root, key);
 }
 
-bool BinarySearchTree::insert(node *rt, string key){
+node *BinarySearchTree::insert(node *rt, string key){
     if(key == rt->word){
         rt->appearances++;
-        return true;
+        return rt;
     }
     if (key > rt->word){
         if (rt->right == nullptr){
@@ -32,7 +31,7 @@ bool BinarySearchTree::insert(node *rt, string key){
             rt->right->parent = rt;
             rt->right->right = nullptr;
             rt->right->left = nullptr;
-            return true;
+            return rt;
         }
         return insert(rt->right, key);
     } else {
@@ -43,7 +42,7 @@ bool BinarySearchTree::insert(node *rt, string key){
             rt->left->parent = rt;
             rt->left->right = nullptr;
             rt->left->left = nullptr;
-            return true;
+            return rt;
         }
         return insert(rt->left, key);
     }
@@ -145,7 +144,6 @@ node *BinarySearchTree::minimum(node *rt){
 void BinarySearchTree::inOrder(node *pos){
     if (pos == nullptr)
         return;
-
     inOrder(pos->left);
     cout << pos->word <<" : " << pos->appearances << endl;
     inOrder(pos->right);
@@ -158,7 +156,6 @@ void BinarySearchTree::printInOrder(){
 void BinarySearchTree::preOrder(node *pos){
     if (pos == nullptr)
         return;
-
     cout << pos->word <<" : " << pos->appearances << endl;
     preOrder(pos->left);
     preOrder(pos->right);
@@ -171,7 +168,6 @@ void BinarySearchTree::printPreOrder(){
 void BinarySearchTree::postOrder(node *pos){
     if (pos == nullptr)
         return;
-
     postOrder(pos->left);
     postOrder(pos->right);
     cout << pos->word <<" : " << pos->appearances << endl;
