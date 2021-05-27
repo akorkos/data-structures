@@ -1,5 +1,10 @@
 #include "SortedArray.h"
 
+/*
+Δημιουργία πίνακα τύπου Element (struct) μεγέθους 1000 θέσεων
+ενώ παράλληλα αρχικοποίηση σε κάθε θέση του πίνακα,
+μια κενή λέξη για το word και την τιμή μηδέν (0) στο appearances.
+*/
 SortedArray::SortedArray(){
     size = 1000;
     posOfLastElement = 0;
@@ -10,10 +15,11 @@ SortedArray::SortedArray(){
     }
 }
 
+// ελευθερώνει την μνήμη που έχει χρησιμοποιηθεί για τον πίνακα.
 SortedArray::~SortedArray() {
     delete[] array;
 }
-
+// υλοποίηση της δυαδικής αναζήτησης
 int SortedArray::search(string key) {
     int first = 0, last = posOfLastElement;
     while (first <= last) {
@@ -28,10 +34,13 @@ int SortedArray::search(string key) {
     return -1;
 }
 
+/*
+Πρόκειται για παραλλαγή της δυαδικής αναζήτησης. Σε περίπτωση που το στοιχείο βρίσκεται μέσα στον πίνακα
+επιστρέφει την θέση του (εάν η found γίνει true), διαφορετικά επιστρέφει την θέση στην οποία
+θα πρέπει να εισαχθεί το στοιχείο (η found γίνεται false).
+*/
 int SortedArray::insert(string key, bool &found) {
-
     int first = 0, last = posOfLastElement - 1, mid;
-
     while (true) {
         mid = (first + last) / 2;
         if (posOfLastElement == 0)
@@ -43,7 +52,6 @@ int SortedArray::insert(string key, bool &found) {
             first = mid + 1;
             if (first > last)
                 return mid + 1;
-
         } else {
             last = mid - 1;
             if (first > last)
@@ -52,6 +60,12 @@ int SortedArray::insert(string key, bool &found) {
     }
 }
 
+/*
+Πρόκειται για την μέθοδο εισαγωγής που καλείται από τον χρήστη. Καλεί την insert για να μάθει ποια είναι η σωστή
+θέση για να εισαχθεί η λέξη χωρίς να διαταράξει την ταξινόμηση των στοιχείων εφόσον η λέξη δεν υπάρχει στον πίνακα, ενώ
+εάν η λέξη βρεθεί στον πίνακα, αυξάνεται η τιμή της appearances της συγκεκριμένης λέξης κατά ένα (1).
+Τέλος, ελέγχεται εάν ο πίνακας έχει γεμίσει, σε περίπτωση που έχει γεμίσει καλείται η resize.
+ */
 void SortedArray::insert(string key) {
     bool found = false;
     int j = insert(key, found);
@@ -68,6 +82,11 @@ void SortedArray::insert(string key) {
     }
 }
 
+/*
+Πρόκειται για την μέθοδο αναζήτησης που χρησιμοποιείται από τον χρήστη.
+Εάν βρεθεί η λέξη μέσα στον πίνακα επιστρέφεται η λογική τιμή true
+μαζί με τον αριθμό εμφανίσεων της λέξης, εάν όχι επιστρέφεται η τιμή false.
+*/
 bool SortedArray::search(string key, int &apps) {
     int pos = search(key);
     if (pos != -1) {
@@ -78,6 +97,12 @@ bool SortedArray::search(string key, int &apps) {
         return false;
 }
 
+/*
+Η μέθοδος που πραγματοποιεί την διαγραφή κάποιας λέξης μέσα από τον πίνακα μόνο όταν η λέξη είναι υπάρχων.
+Εάν η λέξη εμφανίζεται παραπάνω από μια φορά, μετα την κλήση της remove η appearances μειώνεται κατά ένα (1),
+ενώ εάν η λέξη εμφανίζεται μόνο μια φορά, μετα την κλήση της remove η λέξη διαγράφεται
+από τον πίνακα και τα υπόλοιπα στοιχεία μετακινούνται κατά μια θέση προς τα αριστερά.
+ */
 bool SortedArray::remove(string key) {
     int pos = search(key);
     if (pos != -1){
@@ -93,6 +118,11 @@ bool SortedArray::remove(string key) {
         return false;
 }
 
+/*
+Καλείται μόνο όταν ο πίνακας έχει γεμίσει από στοιχεία,
+ουσιαστικά διπλασιάζει το μέγεθος του πίνακα δημιουργώντας
+έτσι ελεύθερο χώρο για την εισαγωγή και άλλων στοιχειών.
+*/
 void SortedArray::resize() {
         size *= 2;
         Element *tmp = new Element[size];
