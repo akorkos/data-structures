@@ -10,30 +10,13 @@
 
 using namespace std;
 
-//Method that counts the number of words in the file.
-int wordCounter(string filename) {
-    string word;
-    fstream file;
-    int count = 0;
-
-    file.open(filename.c_str());
-
-    while (file >> word)
-        count++;
-
-    file.close();
-
-    return count;
-}
-
-//Method that counts the time that is needed for the search in data structures: Unsorted and Sorted Array.
-//it apples in these structures because search() returns int -> number of appearances of the key
-//It uses <chrono>.
+//Μέθοδος που μετράει το χρόνο που χρειάζεται για την αναζήτηση λέξεων σε κάθε δομή δεδομένων
+//Χρήση βιβλιοθήκης <chrono>.
 template<class X>
-void timeNeededForSearchInArrays(string *q, X dataStructure, string structure, int numberOfWords) {
+void timeNeededForSearch(string *q, X dataStructure, string structure, int numberOfWords) {
     auto start = std::chrono::high_resolution_clock::now();
     for (int i = 0; i < numberOfWords; i++) {
-        int times = dataStructure->search(q[i]);
+        int times = dataStructure->search(q[i], 0);
         if (times == 1) {
             cout << "The word: '" << q[i] << "' is shown once in " << structure << endl;
             continue;
@@ -43,99 +26,78 @@ void timeNeededForSearchInArrays(string *q, X dataStructure, string structure, i
     }
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = (stop - start); //auto duration = duration_cast<std::chrono::microseconds>(stop-start);
-    cout << endl << "The time needed for the search in " << structure << " was: " << duration.count() << " microseconds"  << endl;
-    cout<<numberOfWords<<endl; //!!!DEN XREIAZETAI!!!
+    cout << endl << "The time needed for the search in " << structure << " was: " << duration.count() << " microseconds"
+         << endl;
 }
 
-//Method that counts the time that is needed for the search in BST, AVLTree and HashTable.
-//it applies in these structures, because search() returns typename Y
-//It uses <chrono>.
-template<class X, typename Y>
-void timeNeededForSearch(string *q, X dataStructure, string structure, Y node, int numberOfWords) {
-    auto start = std::chrono::high_resolution_clock::now();
-    for (int i = 0; i < numberOfWords; i++) {
-        node = dataStructure->search(q[i]);
-        if (node->appearances == 1) {
-            cout << "The word: '" << q[i] << "' is shown once in " << structure << endl;
-            continue;
-        } else {
-            cout << "The word: '" << q[i] << "' is shown " << node->appearances << " times in " << structure << endl;
-        }
-    }
-    auto stop = std::chrono::high_resolution_clock::now();
-    auto duration = (stop - start); //auto duration = duration_cast<std::chrono::microseconds>(stop-start);
-    cout << endl << "The time needed for the search in " << structure << " was: " << duration.count() << " microseconds"  << endl;
-}
 
 int main() {
-    //open and read file
+    //άνοιγμα και διάβασμα αρχείου
     string filename = "test.txt"; //!!! change into "small-file.txt"; !!!!
     string word; //each word from file
     fstream file;
     file.open(filename.c_str());
 
-    int numberOfWords = wordCounter(filename);
-
-    //total Q of words
+    //Σύνολο Q τυχαίων λέξεων που ζητείται
     string *q = new string[100];//!!!!!change into 1000!!!
     int qIndex = 0;
 
-    //create each data structure
+    //Δημιουργία κάθε δομής δεδομένων
     UnsortedArray *unArr = new UnsortedArray();
     SortedArray *sorArr = new SortedArray();
     BinarySearchTree *bst = new BinarySearchTree();
     AVLTree *avl = new AVLTree();
     HashTable *table = new HashTable();
 
-    //insert words from file to each data structure
+    //διάβασμα κάθε λέξης από το αρχείο και μετατροπή της σε κατάλληλη μορφή
     while (file >> word) {
         int len = word.size();
 
-        //clear grammatical marks from word
+        //βγάζουμε τα σημεία στίξης
         for (int i = 0; i < len; i++) {
-            word[i] = tolower(word[i]); //we set all characters to lower, in order to control the strings easier
+            word[i] = tolower(word[i]); //μετατροπή όλων των γραμμάτων σε πεζά
             if (!(word[i] >= 'a' && word[i] <= 'z')) {
                 word.erase(i--, 1);
                 len = word.size();
             }
         }
 
-        if (rand()%2 && qIndex<100) { //!!!!!change into 1000!!!
+        //δημιουργία συνόλου Q
+        if (rand() % 2 && qIndex < 100) { //!!!!!change into 1000!!!
             q[qIndex] = word;
             qIndex++;
         }
 
-        //insert word in each data structure
-        if(word!="") {
-            unArr->insert(word);
-            sorArr->insert(word);
-            bst->insert(word);
-            avl->insert(word);
-            table->insert(word);
-        }
-
+        //εισαγωγή λέξεων από το αρχείο στις 5 δομές
+        unArr->insert(word);
+        sorArr->insert(word);
+        bst->insert(word);
+        avl->insert(word);
+        table->insert(word);
     }
 
+    //Αναζήτηση όλων των λέξεων του συνόλου Q σε κάθε δομή. Εμφαζίνεται ο χρόνος που χρειάστηκε για την εκτέλεση
+    //αναζήτησης της κάθε δομής & πόσες φορές εμφανίζεται η κάθε λέξη
+
     //UnsortedArray
-    timeNeededForSearchInArrays(q, unArr, "Unsorted Array", qIndex);
+    //timeNeededForSearch(q, unArr, "Unsorted Array", qIndex);
 
     //SortedArray
-    //timeNeededForSearchInArrays(q, sorArr, "Sorted Array", qIndex);
+    timeNeededForSearch(q, sorArr, "Sorted Array", qIndex);
 
     //BinarySearchTree
-    //timeNeededForSearch(q, bst, "Binary Search Tree", bst->getRoot(), qIndex);
+    //timeNeededForSearch(q, bst, "Binary Search Tree", qIndex);
 
     //AVLTree
-    //timeNeededForSearch(q, avl, "AVL Tree", avl->getRoot(), qIndex);
+    //timeNeededForSearch(q, avl, "AVL Tree", qIndex);
 
     //HashTable
-    //timeNeededForSearch(q, table, "HashTable", *table->getRoot(), qIndex);
+    //timeNeededForSearch(q, table, "HashTable", qIndex);
 
     //bst->remove(""); //an den kanw auto, uparxei kenos kombos
     bst->printInOrder();
 
-    //cout<<numberOfWords<<endl;
-
+    //κλέισιμο αρχείου
     file.close();
 
     return 0;

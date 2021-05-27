@@ -14,6 +14,7 @@ class BinarySearchTree{
 private:
     node *root;
     bool insert(node *rt, string key);
+    node *search(string key);
     bool remove(node *rt);
     node *minimum(node *rt);
     void inOrder(node *pos);
@@ -23,12 +24,11 @@ private:
 public:
     BinarySearchTree();
     ~BinarySearchTree();
-    bool insert(string key);
-    bool search(string key, int &apps);
-    node *search(string key);
-    bool remove(string key);
+    bool insert(string key); //εισαγωγή λέξης στο δέντρο
+    int search(string key, int apps); //αναζήτηση κόμβου με τη λέξη key
+    bool remove(string key); //διαγραφή κόμβου με τη λέξη key
     void printInOrder();
     void printPreOrder();
     void printPostOrder();
-    node *getRoot(){return root;}
+    node *getRoot(){return root;} //επιστροφή private πεδίου root
 };

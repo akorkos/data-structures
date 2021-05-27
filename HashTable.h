@@ -17,12 +17,13 @@ public:
     HashTable();
     ~HashTable();
 
-    void insert(string key);
-    HashNode* search(string key);
-    HashNode **getRoot(){return root;}
+    void insert(string key); //εισαγωγή λέξης στο hashtable
+    int search(string key, int apps); //αναζήτηση λέξης στο hashtable
+    HashNode **getRoot(){return root;} //επιστρέφει το περιεχόμενο του private πεδίου **root
 
 private:
-    int findAddress(string key);
+    int findAddress(string key);   //η συνάρτηση μέσω της οποίας βρίσκουμε διεύθυνση για την λέξη
+    HashNode* search(string key);
     HashNode **root;
 };
 

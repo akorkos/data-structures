@@ -87,14 +87,14 @@ void SortedArray::insert(string key) {
 Εάν βρεθεί η λέξη μέσα στον πίνακα επιστρέφεται η λογική τιμή true
 μαζί με τον αριθμό εμφανίσεων της λέξης, εάν όχι επιστρέφεται η τιμή false.
 */
-bool SortedArray::search(string key, int &apps) {
+int SortedArray::search(string key, int apps) {
     int pos = search(key);
     if (pos != -1) {
         apps = array[pos].appearances;
-        return true;
+        return apps;
     }
     else
-        return false;
+        return 0;
 }
 
 /*
