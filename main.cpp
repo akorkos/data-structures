@@ -113,7 +113,6 @@ int main() {
             avl->insert(word);
             table->insert(word);
         }
-
     }
 
     //UnsortedArray
