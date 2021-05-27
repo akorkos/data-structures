@@ -44,7 +44,7 @@ void timeNeededForSearchInArrays(string *q, X dataStructure, string structure, i
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = (stop - start); //auto duration = duration_cast<std::chrono::microseconds>(stop-start);
     cout << endl << "The time needed for the search in " << structure << " was: " << duration.count() << " microseconds"  << endl;
-    cout<<numberOfWords<<endl;
+    cout<<numberOfWords<<endl; //!!!DEN XREIAZETAI!!!
 }
 
 //Method that counts the time that is needed for the search in BST, AVLTree and HashTable.
@@ -81,8 +81,8 @@ int main() {
     int qIndex = 0;
 
     //create each data structure
-    UnsortedArray *unArr = new UnsortedArray(numberOfWords);
-    SortedArray *sorArr = new SortedArray(numberOfWords);
+    UnsortedArray *unArr = new UnsortedArray();
+    SortedArray *sorArr = new SortedArray();
     BinarySearchTree *bst = new BinarySearchTree();
     AVLTree *avl = new AVLTree();
     HashTable *table = new HashTable();
@@ -106,11 +106,13 @@ int main() {
         }
 
         //insert word in each data structure
-        unArr->insert(word);
-        sorArr->insert(word);
-        bst->insert(word);
-        avl->insert(word);
-        table->insert(word);
+        if(word!="") {
+            unArr->insert(word);
+            sorArr->insert(word);
+            bst->insert(word);
+            avl->insert(word);
+            table->insert(word);
+        }
     }
 
     //UnsortedArray
@@ -128,8 +130,8 @@ int main() {
     //HashTable
     //timeNeededForSearch(q, table, "HashTable", *table->getRoot(), qIndex);
 
-    bst->remove(""); //an den kanw auto, uparxei kenos kombos
-    //bst->printInOrder();
+    //bst->remove(""); //an den kanw auto, uparxei kenos kombos
+    bst->printInOrder();
 
     //cout<<numberOfWords<<endl;
 
