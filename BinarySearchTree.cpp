@@ -179,5 +179,5 @@ void BinarySearchTree::destroy(node *rt) {
         destroy(rt->left);
         destroy(rt->right);
         delete (rt);
-    }
+    } 
 }
