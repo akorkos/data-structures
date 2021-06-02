@@ -6,7 +6,7 @@
 μια κενή λέξη για το word και την τιμή μηδέν (0) στο appearances.
 */
 SortedArray::SortedArray() {
-    size = 5;
+    size = 1000;
     posOfLastElement = 0;
     array = new Element[size];
     for (int i = 0; i < size; i++) {
@@ -107,7 +107,7 @@ int SortedArray::search(string key) {
 από τον πίνακα και τα υπόλοιπα στοιχεία μετακινούνται κατά μια θέση προς τα αριστερά.
  */
 bool SortedArray::remove(string key) {
-    int pos = search(key);
+    int pos = binarySearch(key);
     if (pos != -1) {
         posOfLastElement--;
         for (int i = pos; i < posOfLastElement; i++)

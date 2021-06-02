@@ -20,14 +20,16 @@ UnsortedArray::~UnsortedArray() {
     delete[] array;
 }
 
-//Η μέθοδος που πραγματοποιεί την (σειριακή) αναζήτηση κάποιας λέξης μέσα στο πίνακα.
+/*
+Πρόκειται για την μέθοδο αναζήτησης που χρησιμοποιείται από τον χρήστη.
+Εάν η λέξη εμφανίζεται μέσα στον πίνακα επιστρέφεται ο αριθμός των εμφανίσεων διαφορετικά, επιστρέφεται η τιμή 0
+*/
 int UnsortedArray::search(string key) {
-    int pos = -1;
-    for (int i = 0; i < posOfLastElement && pos == -1; i++) {
-        if (array[i].word == key)
-            pos = i;
-    }
-    return pos;
+    int pos = serialSearch(key);
+    if (pos == -1)
+        return 0;
+    else
+        return array[pos].appearances;
 }
 
 /*
@@ -39,7 +41,7 @@ int UnsortedArray::search(string key) {
 */
 void UnsortedArray::insert(string key) {
     if (posOfLastElement < size) {
-        int pos = search(key);
+        int pos = serialSearch(key);
         if (pos == -1) {
             posOfLastElement++;
             array[posOfLastElement].word = key;
@@ -47,7 +49,7 @@ void UnsortedArray::insert(string key) {
         } else
             array[pos].appearances++;
     }
-    if (posOfLastElement == size)
+    if (abs(posOfLastElement-size) == 1)
         resize();
 }
 
@@ -56,9 +58,9 @@ void UnsortedArray::insert(string key) {
 Εάν η λέξη εμφανίζεται παραπάνω από μια φορά, μετα την κλήση της remove η appearances μειώνεται κατά ένα (1),
 ενώ εάν η λέξη εμφανίζεται μόνο μια φορά, μετα την κλήση της remove η λέξη διαγράφεται
 από τον πίνακα και τα υπόλοιπα στοιχεία μετακινούνται κατά μια θέση προς τα αριστερά.
-  */
+*/
 bool UnsortedArray::remove(string key) {
-    int pos = search(key);
+    int pos = serialSearch(key);
     if (pos != -1) {
         posOfLastElement--;
         for (int i = pos; i < posOfLastElement; i++)
@@ -89,16 +91,12 @@ void UnsortedArray::resize() {
     array = tmp;
 }
 
-/*
-Πρόκειται για την μέθοδο αναζήτησης που χρησιμοποιείται από τον χρήστη.
-Εάν βρεθεί η λέξη μέσα στον πίνακα επιστρέφεται η λογική τιμή true
-μαζί με τον αριθμό εμφανίσεων της λέξης, εάν όχι επιστρέφεται η τιμή false.
-*/
-int UnsortedArray::search(string key, int apps) {
-    int pos = search(key);
-    if (pos != -1) {
-        apps = array[pos].appearances;
-        return apps;
-    } else
-        return 0;
+// Η μέθοδος που πραγματοποιεί την (σειριακή) αναζήτηση κάποιας λέξης μέσα στο πίνακα.
+int UnsortedArray::serialSearch(string key) {
+    int pos = -1;
+    for (int i = 0; i < posOfLastElement && pos == -1; i++) {
+        if (array[i].word == key)
+            pos = i;
+    }
+    return pos;
 }
