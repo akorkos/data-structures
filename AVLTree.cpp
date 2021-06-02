@@ -39,7 +39,7 @@ Node* AVLTree::insert(Node* rt, string key) {
 }
 
 //αναζήτηση κόμβου με τη λέξη key
-Node *AVLTree::search(string key) {
+Node *AVLTree::privSearch(string key) {
     Node *pos = root;
     while(pos != nullptr && key != pos->word){
         if (key > pos->word)
@@ -51,16 +51,13 @@ Node *AVLTree::search(string key) {
 }
 
 
-int AVLTree::search(string key, int apps) {
-    Node *pos = search(key); //καλεί την αντίστοιχη private μέθοδο
+int AVLTree::search(string key) {
+    Node *pos = privSearch(key); //καλεί την αντίστοιχη private μέθοδο
     if (pos == nullptr) {
         return 0;
-    } else {
-        apps = pos->appearances;
-        return apps;
-    }
+    } else
+        return pos->appearances;
 }
-
 
 void AVLTree::inOrder(Node *pos){
     if (pos == nullptr)

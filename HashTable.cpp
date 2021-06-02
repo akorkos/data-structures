@@ -43,7 +43,7 @@ void HashTable::insert(string key) {
     }
 }
 
-HashNode* HashTable::search(string key) {
+HashNode* HashTable::privSearch(string key) {
     //ίδια διαδικασία με insert
     int step = findAddress(key);
     while ((root[step] != nullptr) && (root[step]->word != key)) {
@@ -57,12 +57,10 @@ HashNode* HashTable::search(string key) {
         return nullptr;
 }
 
-int HashTable::search(string key, int apps) {
-    HashNode *pos = search(key); //καλεί την αντίστοιχη private μέθοδο
+int HashTable::search(string key) {
+    HashNode *pos = privSearch(key); //καλεί την αντίστοιχη private μέθοδο
     if (pos == nullptr) {
         return 0;
-    } else {
-        apps = pos->appearances;
-        return apps;
-    }
+    } else
+        return pos->appearances;
 }

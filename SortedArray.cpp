@@ -6,7 +6,7 @@
 μια κενή λέξη για το word και την τιμή μηδέν (0) στο appearances.
 */
 SortedArray::SortedArray() {
-    size = 1000;
+    size = 5;
     posOfLastElement = 0;
     array = new Element[size];
     for (int i = 0; i < size; i++) {
@@ -20,19 +20,22 @@ SortedArray::~SortedArray() {
     delete[] array;
 }
 
-// υλοποίηση της δυαδικής αναζήτησης
-int SortedArray::search(string key) {
+/*
+Πρόκειται για την μέθοδο αναζήτησης που χρησιμοποιείται από τον χρήστη.
+H υλοποίηση της δυαδικής αναζήτησης.
+*/
+int SortedArray::binarySearch(string key) {
     int first = 0, last = posOfLastElement;
     while (first <= last) {
         int mid = (first + last) / 2;
         if (array[mid].word == key)
-            return array[mid].appearances;
+            return mid;
         if (array[mid].word < key)
             first = mid + 1;
         else
             last = mid - 1;
     }
-    return 0;
+    return -1;
 }
 
 /*
@@ -79,20 +82,22 @@ void SortedArray::insert(string key) {
         array[j].word = key;
         array[j].appearances = 1;
         posOfLastElement++;
-        if (posOfLastElement == size)
+        if (abs(posOfLastElement-size) == 1)
             resize();
     }
 }
 
 /*
 Πρόκειται για την μέθοδο αναζήτησης που χρησιμοποιείται από τον χρήστη.
-Εάν βρεθεί η λέξη μέσα στον πίνακα επιστρέφεται η λογική τιμή true
-μαζί με τον αριθμό εμφανίσεων της λέξης, εάν όχι επιστρέφεται η τιμή false.
+Εάν βρεθεί η λέξη μέσα στον πίνακα επιστρέφεται ο αριθμός εμφανίσεων της λέξης, εάν όχι επιστρέφεται η τιμή 0.
 */
 
-int SortedArray::search(string key, int apps) {
-    apps = search(key);
-    return apps;
+int SortedArray::search(string key) {
+    int pos = binarySearch(key);
+    if (pos == -1)
+        return 0;
+    else
+        return array[pos].appearances;
 }
 
 /*

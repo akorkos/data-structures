@@ -16,7 +16,7 @@ template<class X>
 void timeNeededForSearch(string *q, X dataStructure, string structure, int numberOfWords) {
     auto start = std::chrono::high_resolution_clock::now();
     for (int i = 0; i < numberOfWords; i++) {
-        int times = dataStructure->search(q[i], 0);
+        int times = dataStructure->search(q[i]);
         if (times == 1) {
             cout << "The word: '" << q[i] << "' is shown once in " << structure << endl;
             continue;
@@ -69,29 +69,30 @@ int main() {
 
         //εισαγωγή λέξεων από το αρχείο στις 5 δομές
         unArr->insert(word);
-        sorArr->insert(word);
-        bst->insert(word);
-        avl->insert(word);
-        table->insert(word);
+        //sorArr->insert(word);
+        //bst->insert(word);
+        //avl->insert(word);
+        //table->insert(word);
     }
 
     //Αναζήτηση όλων των λέξεων του συνόλου Q σε κάθε δομή. Εμφαζίνεται ο χρόνος που χρειάστηκε για την εκτέλεση
     //αναζήτησης της κάθε δομής & πόσες φορές εμφανίζεται η κάθε λέξη
 
+
     //UnsortedArray
     timeNeededForSearch(q, unArr, "Unsorted Array", qIndex);
 
     //SortedArray
-    timeNeededForSearch(q, sorArr, "Sorted Array", qIndex);
+   // timeNeededForSearch(q, sorArr, "Sorted Array", qIndex);
 
     //BinarySearchTree
-    timeNeededForSearch(q, bst, "Binary Search Tree", qIndex);
+   // timeNeededForSearch(q, bst, "Binary Search Tree", qIndex);
 
     //AVLTree
-    timeNeededForSearch(q, avl, "AVL Tree", qIndex);
+   // timeNeededForSearch(q, avl, "AVL Tree", qIndex);
 
     //HashTable
-    timeNeededForSearch(q, table, "HashTable", qIndex);
+   // timeNeededForSearch(q, table, "HashTable", qIndex);
 
     //κλέισιμο αρχείου
     file.close();

@@ -51,18 +51,20 @@ bool BinarySearchTree::insert(node *rt, string key) {
     }
 }
 
-int BinarySearchTree::search(string key, int apps) {
-    node *pos = search(key); //καλεί την αντίστοιχη private μέθοδο
+/*
+Πρόκειται για την μέθοδο αναζήτησης που χρησιμοποιείται από τον χρήστη.
+Εάν η λέξη εμφανίζεται μέσα στον πίνακα επιστρέφεται ο αριθμός των εμφανίσεων διαφορετικά, επιστρέφεται η τιμή 0
+*/
+int BinarySearchTree::search(string key) {
+    node *pos = privSearch(key); //καλεί την αντίστοιχη private μέθοδο
     if (pos == nullptr) {
         return 0;
-    } else {
-        apps = pos->appearances;
-        return apps;
-    }
+    } else
+        return pos->appearances;
 }
 
 //αναζήτηση κόμβου με τη λέξη key
-node *BinarySearchTree::search(string key) {
+node *BinarySearchTree::privSearch(string key) {
     node *pos = root;
     while (pos != nullptr && key != pos->word) {
         if (key > pos->word)
@@ -118,7 +120,7 @@ bool BinarySearchTree::remove(node *rt) {
 }
 
 bool BinarySearchTree::remove(string key) {
-    node *hasChild = search(key);
+    node *hasChild = privSearch(key);
     if (hasChild == nullptr) //έλεγχος αν υπάρχει κόμβος με τη λέξη key
         return false;
     else
