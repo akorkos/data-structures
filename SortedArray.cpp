@@ -5,11 +5,11 @@
 ενώ παράλληλα αρχικοποίηση σε κάθε θέση του πίνακα,
 μια κενή λέξη για το word και την τιμή μηδέν (0) στο appearances.
 */
-SortedArray::SortedArray(){
+SortedArray::SortedArray() {
     size = 1000;
     posOfLastElement = 0;
     array = new Element[size];
-    for (int i = 0; i < size; i++){
+    for (int i = 0; i < size; i++) {
         array[i].word = " ";
         array[i].appearances = 0;
     }
@@ -19,6 +19,7 @@ SortedArray::SortedArray(){
 SortedArray::~SortedArray() {
     delete[] array;
 }
+
 // υλοποίηση της δυαδικής αναζήτησης
 int SortedArray::search(string key) {
     int first = 0, last = posOfLastElement;
@@ -31,7 +32,7 @@ int SortedArray::search(string key) {
         else
             last = mid - 1;
     }
-    return -1;
+    return 0;
 }
 
 /*
@@ -66,6 +67,7 @@ int SortedArray::insert(string key, bool &found) {
 εάν η λέξη βρεθεί στον πίνακα, αυξάνεται η τιμή της appearances της συγκεκριμένης λέξης κατά ένα (1).
 Τέλος, ελέγχεται εάν ο πίνακας έχει γεμίσει, σε περίπτωση που έχει γεμίσει καλείται η resize.
  */
+
 void SortedArray::insert(string key) {
     bool found = false;
     int j = insert(key, found);
@@ -87,14 +89,10 @@ void SortedArray::insert(string key) {
 Εάν βρεθεί η λέξη μέσα στον πίνακα επιστρέφεται η λογική τιμή true
 μαζί με τον αριθμό εμφανίσεων της λέξης, εάν όχι επιστρέφεται η τιμή false.
 */
-bool SortedArray::search(string key, int &apps) {
-    int pos = search(key);
-    if (pos != -1) {
-        apps = array[pos].appearances;
-        return true;
-    }
-    else
-        return false;
+
+int SortedArray::search(string key, int apps) {
+    apps = search(key);
+    return apps;
 }
 
 /*
@@ -105,36 +103,32 @@ bool SortedArray::search(string key, int &apps) {
  */
 bool SortedArray::remove(string key) {
     int pos = search(key);
-    if (pos != -1){
-        if (array[pos].appearances > 1)
-            array[pos].appearances--;
-        else {
-            posOfLastElement--;
-            for (int i = pos; i < posOfLastElement; i++)
-                array[i] = array[i+1];
-        }
+    if (pos != -1) {
+        posOfLastElement--;
+        for (int i = pos; i < posOfLastElement; i++)
+            array[i] = array[i + 1];
         return true;
-    }else
+    } else
         return false;
 }
 
 /*
- Καλείται μόνο όταν ο πίνακας έχει γεμίσει από στοιχεία,
+Καλείται μόνο όταν ο πίνακας έχει γεμίσει από στοιχεία,
 ουσιαστικά διπλασιάζει το μέγεθος του πίνακα δημιουργώντας
 έτσι ελεύθερο χώρο για την εισαγωγή και άλλων στοιχειών.
 */
 void SortedArray::resize() {
-        size *= 2;
-        Element *tmp = new Element[size];
-        for (int i = 0; i < size; i++){
-            if (i <= posOfLastElement){
-                tmp[i].word = array[i].word;
-                tmp[i].appearances = array[i].appearances;
-            } else {
-                tmp[i].word = " ";
-                tmp[i].appearances = 0;
-            }
+    size *= 2;
+    Element *tmp = new Element[size];
+    for (int i = 0; i < size; i++) {
+        if (i <= posOfLastElement) {
+            tmp[i].word = array[i].word;
+            tmp[i].appearances = array[i].appearances;
+        } else {
+            tmp[i].word = " ";
+            tmp[i].appearances = 0;
         }
-        delete[] array;
-        array = tmp;
+    }
+    delete[] array;
+    array = tmp;
 }

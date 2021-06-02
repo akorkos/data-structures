@@ -1,25 +1,30 @@
 #ifndef HASHMAP_H
 #define HASHMAP_H
-#include <iostream>
 #include <string>
 
 using namespace std;
 
 struct HashNode{
     string word;
-    int address, appearances;
+    int address;
+    int appearances;
 };
 
-const int size = 100000;
+const int size=100000;
 
 class HashTable{
-private:
-    HashNode **root;
-    int findAddress(string key);
 public:
     HashTable();
     ~HashTable();
-    void insert(string key);
-    int search(string key);
+
+    void insert(string key); //εισαγωγή λέξης στο hashtable
+    int search(string key, int apps); //αναζήτηση λέξης στο hashtable
+
+private:
+    void insert(string key, bool done);
+    int findAddress(string key);   //η συνάρτηση μέσω της οποίας βρίσκουμε διεύθυνση για την λέξη
+    HashNode* search(string key);
+    HashNode **root;
 };
-#endif
+
+#endif //DOMES_DEDOMENWN_2021_HASHMAP_H

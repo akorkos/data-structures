@@ -5,13 +5,15 @@ using namespace std;
 struct node{
     string word;
     int appearances;
-    node *parent, *left, *right;
+    node *parent;
+    node *left;
+    node *right;
 };
 
 class BinarySearchTree{
 private:
     node *root;
-    node *insert(node *rt, string key);
+    bool insert(node *rt, string key);
     node *search(string key);
     bool remove(node *rt);
     node *minimum(node *rt);
@@ -22,9 +24,9 @@ private:
 public:
     BinarySearchTree();
     ~BinarySearchTree();
-    void insert(string key);
-    bool search(string key, int &apps);
-    bool remove(string key);
+    bool insert(string key); //εισαγωγή λέξης στο δέντρο
+    int search(string key, int apps); //αναζήτηση κόμβου με τη λέξη key
+    bool remove(string key); //διαγραφή κόμβου με τη λέξη key
     void printInOrder();
     void printPreOrder();
     void printPostOrder();
