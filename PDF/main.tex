@@ -11,6 +11,7 @@
 \usepackage[table,xcdraw]{xcolor}
 \usepackage{enumerate}
 \usepackage{multicol}
+\usepackage{fancyhdr}
 \usepackage{titlesec}
 \usepackage{hyperref}
 \usepackage[parfill]{parskip}
@@ -89,6 +90,12 @@
 \end{scope}
 \end{tikzpicture}%
 }
+
+\pagestyle{fancy}
+\fancyhead[R]{\thepage}
+\fancyhead[L]{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot{}
 
 
 \begin{document}
