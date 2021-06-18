@@ -30,6 +30,7 @@ void timeNeededForSearch(string *q, X dataStructure, string structure, int numbe
     cout << endl << "The time needed for the search in " << structure << " was: " << duration.count() << " microseconds" << endl;
 }
 
+//Μέθοδος που μετράει το χρόνο που χρειάζεται για την αναζήτηση λέξεων στη δομή AVLTree
 void timeForAVL(string *q, AVLTree dataStructure, int numberOfWords, Node *root){
     auto start = std::chrono::high_resolution_clock::now();
     for (int i = 0; i < numberOfWords; i++) {
@@ -54,7 +55,7 @@ int main() {
     string *q = new string[1000]; //Σύνολο Q τυχαίων λέξεων που ζητείται
     int qIndex = 0;
 
-    Node *rt = nullptr;
+    Node *rt = nullptr; //κόμβος-ρίζα για τη δομή AVL Tree
     //Δημιουργία κάθε δομής δεδομένων
     UnsortedArray *Array = new UnsortedArray();
     SortedArray *sArray= new SortedArray();
