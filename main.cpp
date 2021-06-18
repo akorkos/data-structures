@@ -9,6 +9,7 @@
 #include "HashTable.h"
 
 using namespace std;
+using namespace std::chrono;
 
 //Μέθοδος που μετράει το χρόνο που χρειάζεται για την αναζήτηση λέξεων σε κάθε δομή δεδομένων
 //Χρήση βιβλιοθήκης <chrono>.
@@ -25,33 +26,29 @@ void timeNeededForSearch(string *q, X dataStructure, string structure, int numbe
         }
     }
     auto stop = std::chrono::high_resolution_clock::now();
-    auto duration = (stop - start);
-    cout << endl << "The time needed for the search in " << structure << " was: " << duration.count() << " microseconds"
-         << endl;
+    auto duration = duration_cast<microseconds>(stop - start);
+    cout << endl << "The time needed for the search in " << structure << " was: " << duration.count() << " microseconds" << endl;
 }
 
 int main() {
-    //άνοιγμα και διάβασμα αρχείου
     string filename = "small-file.txt";
     string word; //κάθε λέξη του αρχείου
     fstream file;
     file.open(filename.c_str());
-
-    //Σύνολο Q τυχαίων λέξεων που ζητείται
-    string *q = new string[1000];
+    string *q = new string[1000]; //Σύνολο Q τυχαίων λέξεων που ζητείται
     int qIndex = 0;
 
+    Node *rt = nullptr;
     //Δημιουργία κάθε δομής δεδομένων
-    UnsortedArray *unArr = new UnsortedArray();
-    SortedArray *sorArr = new SortedArray();
-    BinarySearchTree *bst = new BinarySearchTree();
-    AVLTree *avl = new AVLTree();
-    HashTable *table = new HashTable();
+    UnsortedArray *Array = new UnsortedArray();
+    SortedArray *sArray= new SortedArray();
+    BinarySearchTree *BST = new BinarySearchTree();
+    AVLTree *AVL = new AVLTree();
+    HashTable *HASH = new HashTable();
 
     //διάβασμα κάθε λέξης από το αρχείο και μετατροπή της σε κατάλληλη μορφή
     while (file >> word) {
         int len = word.size();
-
         //βγάζουμε τα σημεία στίξης
         for (int i = 0; i < len; i++) {
             word[i] = tolower(word[i]); //μετατροπή όλων των γραμμάτων σε πεζά
@@ -60,7 +57,6 @@ int main() {
                 len = word.size();
             }
         }
-
         //δημιουργία συνόλου Q
         if (rand() % 2 && qIndex < 1000) {
             q[qIndex] = word;
@@ -68,34 +64,33 @@ int main() {
         }
 
         //εισαγωγή λέξεων από το αρχείο στις 5 δομές
-        unArr->insert(word);
-        //sorArr->insert(word);
-        //bst->insert(word);
-        //avl->insert(word);
-        //table->insert(word);
+        //Array->insert(word);
+        //sArray->insert(word);
+        //BST->insert(word);
+        rt = AVL->insert(rt,word);
+        //HASH->insert(word);
     }
 
     //Αναζήτηση όλων των λέξεων του συνόλου Q σε κάθε δομή. Εμφαζίνεται ο χρόνος που χρειάστηκε για την εκτέλεση
     //αναζήτησης της κάθε δομής & πόσες φορές εμφανίζεται η κάθε λέξη
 
+    //timeNeededForSearch(q, unArr, "Unsorted Array", qIndex); //UnsortedArray
 
-    //UnsortedArray
-    timeNeededForSearch(q, unArr, "Unsorted Array", qIndex);
+    //timeNeededForSearch(q, sorArr, "Sorted Array", qIndex); //SortedArray
 
-    //SortedArray
-   // timeNeededForSearch(q, sorArr, "Sorted Array", qIndex);
+    //timeNeededForSearch(q, bst, "Binary Search Tree", qIndex); //BinarySearchTree
 
-    //BinarySearchTree
-   // timeNeededForSearch(q, bst, "Binary Search Tree", qIndex);
+    //timeNeededForSearch(q, avl, "AVL Tree", qIndex); //AVLTree
 
-    //AVLTree
-   // timeNeededForSearch(q, avl, "AVL Tree", qIndex);
+    //timeNeededForSearch(q, table, "HashTable", qIndex); //HashTable
 
-    //HashTable
-   // timeNeededForSearch(q, table, "HashTable", qIndex);
+    string s = "zeitschrift";
+    //rt = AVL->remove(rt, s);
 
-    //κλέισιμο αρχείου
-    file.close();
+    AVL->printInOrder();
+
+    cout << AVL->isBalanced(AVL->getRoot());
+    file.close(); //κλέισιμο αρχείου
 
     return 0;
 }

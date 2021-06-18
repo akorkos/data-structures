@@ -30,4 +30,30 @@ public:
     void printInOrder();
     void printPreOrder();
     void printPostOrder();
+    node *getRoot(){
+        return root;
+    }
+    bool isBST(node* root)
+    {
+        static node *prev = nullptr;
+
+        // traverse the tree in inorder fashion
+        // and keep track of prev node
+        if (root)
+        {
+            if (!isBST(root->left))
+                return false;
+
+            // Allows only distinct valued nodes
+            if (prev != nullptr &&
+                root->word <= prev->word)
+                return false;
+
+            prev = root;
+
+            return isBST(root->right);
+        }
+
+        return true;
+    }
 };

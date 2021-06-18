@@ -8,34 +8,58 @@ AVLTree::~AVLTree() {
     destroy(root);
 }
 
-void AVLTree::insert(string key) {
-    root = insert(root, key); //καλεί την αντίστοιχη private μέθοδο για την εισαγωγή λέξης στο δέντρο
-}
+//void AVLTree::insert(string key) {
+//    Node *rt = nullptr;
+//    insert(rt, key); //καλεί την αντίστοιχη private μέθοδο για την εισαγωγή λέξης στο δέντρο
+//}
 
 //εισαγωγή λέξης στο δέντρο
 Node* AVLTree::insert(Node* rt, string key) {
     //έλεγχος αν το δέντρο είναι κενό
-    if (rt == nullptr){
-        rt = new Node;
-        rt->word = key;
-        rt->left = nullptr;
-        rt->right = nullptr;
-        rt->appearances = 1; //εισαγωγή νέας λέξης, άρα πρώτη εμφάνισή της
-        rt->height = 1;
-        return rt;
-    } else if (key < rt->word){ //αν η δοθείσα λέξη/το κλειδί είναι μικρότερη λεξικογραφικά από τη λέξη του κόμβου που
-        //δίνεται, γίνεται έλεγχος για το αριστερό παιδί του κόμβου
-        rt->left = insert(rt->left, key);
-        rt = balance(rt);
-    } else if (key > rt->word){ //αν η δοθείσα λέξη/το κλειδί είναι μεγαλύτερη λεξικογραφικά από τη λέξη του κόμβου που
-        //δίνεται, γίνεται έλεγχος για το δεξί παιδί του κόμβου
-        rt->right = insert(rt->right, key);
-        rt = balance(rt);
-    } else if (key == rt->word){ //αν υπάρχει ήδη η λέξη, αυξάνονται οι εμφανίσεις της κατά μία
-        rt->appearances++;
-        return rt;
+
+    Node *p = new Node;
+    Node *parent;
+    parent = nullptr;
+
+    p->word = key;
+    p->right = nullptr;
+    p->left = nullptr;
+
+    if (rt == nullptr)
+        rt = p;
+    else {
+        Node *ptr;
+        ptr = rt;
+
+        while (ptr != nullptr){
+            parent = ptr;
+            if (key > ptr->word)
+                ptr = ptr->right;
+            else
+                ptr = ptr->left;
+        }
+        if (key < parent->word)
+            parent->left = p;
+        else
+            parent->right = p;
     }
+
+    rt->height = 1 + maximum(height(rt->left), height(rt->right));
+
+    int balance = getBalance(rt);
+
+    if (balance > 1 && rt->left->word > key)
+        return rR(rt);
+    if (balance > 1 && rt->left->word < key)
+        return rR(rt);
+
+    if (balance < -1 && rt->right->word < key)
+        return rL(rt);
+    if (balance < -1 && rt->right->word > key)
+        return rL(rt);
+
     return rt;
+
 }
 
 //αναζήτηση κόμβου με τη λέξη key
@@ -56,7 +80,7 @@ int AVLTree::search(string key) {
     if (pos == nullptr) {
         return 0;
     } else
-        return pos->appearances;
+        return 1;
 }
 
 void AVLTree::inOrder(Node *pos){
@@ -64,19 +88,20 @@ void AVLTree::inOrder(Node *pos){
         return;
 
     inOrder(pos->left);
-    cout << pos->word <<" : " << pos->appearances << endl;
+    cout << pos->word <<endl;
     inOrder(pos->right);
 }
 
 void AVLTree::printInOrder(){
-    inOrder(root); //καλεί την αντίστοιχη private μέθοδο για εκτύπωση των κόμβων με in-order
+    Node *rt = nullptr;
+    inOrder(rt); //καλεί την αντίστοιχη private μέθοδο για εκτύπωση των κόμβων με in-order
 }
 
 void AVLTree::preOrder(Node *pos){
     if (pos == nullptr)
         return;
 
-    cout << pos->word <<" : " << pos->appearances << endl;
+    cout << pos->word <<endl;
     preOrder(pos->left);
     preOrder(pos->right);
 }
@@ -90,7 +115,7 @@ void AVLTree::postOrder(Node *pos){
         return;
     postOrder(pos->left);
     postOrder(pos->right);
-    cout << pos->word <<" : " << pos->appearances << endl;
+    cout << pos->word <<endl;
 }
 
 void AVLTree::printPostOrder(){
@@ -130,93 +155,90 @@ Node *AVLTree::minimum(Node *rt) {
     return current;
 }
 
-//κάνει τη κατάλληλη περιστροφή στο δέντρο
-Node *AVLTree::balance(Node *rt) {
-    rt->height = 1 + maximum(height(rt->left),height(rt->right));
-    int difference = getBalance(rt);
-    if (difference > 1){
-        if (getBalance(rt->left) > 0)
-            rt = rLL(rt);
-        else
-            rt= rLR(rt);
-    } else if (difference < -1) {
-        if (getBalance(rt->right) > 0)
-            rt = rRL(rt);
-        else
-            rt = rRR(rt);
-    }
-    return rt;
-}
-
 //περιστροφή δεξιά - δεξιά
-Node *AVLTree::rRR(Node *rt) {
-    Node *temp = rt->right;
-    rt->right = temp->left;
-    temp->left = rt;
+Node *AVLTree::rR(Node *rt) {
+    Node *x = rt->left;
+    Node *tmp = x->right;
+
+    x->right = rt;
+    rt->left = tmp;
+
     rt->height = 1 + maximum(height(rt->left),height(rt->right));
-    temp->height = 1 + maximum(height(rt->left),height(rt->right));
-    return temp;
+    x->height = 1 + maximum(height(rt->left),height(rt->right));
+    return x;
 }
 
-//περιστροφή αριστερά - δεξιά
-Node *AVLTree::rLR(Node *rt) {
-    Node *temp;
-    temp = rt->left;
-    rt->left = rRR(temp);
-    return rLL(rt);
-}
 
 //περιστροφή αριστερά - αριστερά
-Node *AVLTree::rLL(Node *rt) {
-    Node *temp = rt->left;
-    rt->left = temp->right;
-    temp->right = rt;
+Node *AVLTree::rL(Node *rt) {
+    Node *x = rt->right;
+    Node *tmp = x->left;
+
+    x->left = rt;
+    rt->right = tmp;
+
     rt->height = 1 + maximum(height(rt->left),height(rt->right));
-    temp->height = 1 + maximum(height(rt->left),height(rt->right));
-    return temp;
+    x->height = 1 + maximum(height(rt->left),height(rt->right));
+    return x;
 }
 
-//περιστροφή δεξιά - αριστερά
-Node *AVLTree::rRL(Node *rt) {
-    Node *temp = rt->right;
-    rt->right= rLL(temp);
-    return rRR(rt);
-}
-
-void AVLTree::remove(string key) {
-    root = remove(root, key); //καλεί την αντίστοιχη private μέθοδο για διαγραφή κόμβου από το δέντρο
-}
+//void AVLTree::remove(string key) {
+  // root = remove(root, key); //καλεί την αντίστοιχη private μέθοδο για διαγραφή κόμβου από το δέντρο
+//}
 
 //διαγραφή κόμβου από το δέντρο
 Node *AVLTree::remove(Node *rt, string key) {
-    //έλεγχος αν το δέντρο είναι κενό
     if (rt == nullptr)
         return rt;
-    //αν δεν είναι κενό, ψάχνει να βρει το κόμβο που έχει τη λέξη-key
-    if (key < rt->word){
+    if (key < rt->word)
         rt->left = remove(rt->left, key);
-        rt = balance(rt);
-    } else if (key > rt->word){
-        rt->right = remove(rt->right, key);
-        rt = balance(rt);
-    } else{
-        //έλεγχος αν τα παιδιά είναι κενά
-        if (rt->left == nullptr){
-            Node *temp = rt->right;
-            delete rt;
-            return temp;
-        } else if (rt->right == nullptr){
-            Node *temp = rt->left;
-            delete rt;
-            return temp;
+    else if(key > rt->word)
+        rt->right = remove(rt -> right, key);
+    else{
+        if((rt -> left == nullptr) || (rt -> right == nullptr)){
+            Node *temp = new Node;
+            if(temp == rt->left)
+                temp = rt->left;
+            else
+                temp = rt->right;
+            if (temp == nullptr){
+                temp = rt;
+                rt = nullptr;
+            } else
+                *rt = *temp;
+            delete(temp);
+        } else {
+            Node* temp = minimum(rt->right);
+            rt->word = temp->word;
+            rt->right = remove(rt->right,temp->word);
         }
-        Node *temp = minimum(rt->right);
-        rt->word = temp->word;
-        rt->right = remove(rt->right, temp->word);
     }
+
+    rt->height = 1 + max(height(rt->left), height(rt->right));
+
+    int balance = getBalance(rt);
+    //ελέγχουμε αν το δέντρο είναι ισοσκελισμένο
+    //και αν δεν είναι το τροποποιύμε με τις συναρτήσεις αριστερής και δεξιας περιστροφης:
+    if (balance > 1){
+        if (getBalance(rt->left) >= 0)
+            return rR(rt);
+        else if (getBalance(rt->left) < 0){
+            rt -> left = rL(rt -> left);
+            return rR(rt);
+        }
+    } else if (balance < -1){
+        if (getBalance(rt->right) <= 0)
+            return rL(rt);
+        else if (getBalance(rt -> right) > 0) {
+            rt->right = rR(rt->right);
+            return rL(rt);
+        }
+    }
+    return rt;
 }
 
 //επιστροφή μεγαλύτερου ακέραιου αριθμού
 int AVLTree::maximum(int x, int y) {
     return x>y?x:y;
 }
+
