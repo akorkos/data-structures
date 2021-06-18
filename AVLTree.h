@@ -5,10 +5,40 @@
 #include <iostream>
 using namespace std;
 
+class Node
+{
+public:
+    string key;
+    Node *left;
+    Node *right;
+    int height, appearances;
+};
+
+class AVLTree {
+public:
+    AVLTree();
+    ~AVLTree();
+
+    Node* newNode(string key);
+    void printPostorder(Node* root);
+    void printInorder(Node* root);
+    Node *rightRotate(Node *y);
+    Node *leftRotate(Node *x);
+    int getBalance(Node *N);
+    Node* insert(Node* node, string key);
+    void preOrder(Node *root);
+    int max(int a, int b);
+    int height(Node *N);
+    Node* deleteNode(Node* root, string key);
+    Node * minValueNode(Node* node);
+    int search(Node* root, string key);
+};
+
+/**
 struct Node{
     string word;
     Node *right, *left;
-    int height;
+    int height, appearances;
 };
 
 class AVLTree{
@@ -26,7 +56,7 @@ private:
     void destroy(Node *rt);
 public:
     AVLTree();
-    Node *insert(Node* rt, string key);
+    Node * insert(Node *rt, string key);
     Node *remove(Node *rt, string key);
     ~AVLTree();
     void inOrder(Node *pos);
@@ -43,14 +73,14 @@ public:
     bool isBalanced(Node *root)
     {
         int lh; /* for height of left subtree */
-        int rh; /* for height of right subtree */
-
+     //   int rh; /* for height of right subtree */
+/**
         /* If tree is empty then return true */
-        if (root == nullptr)
+      /**  if (root == nullptr)
             return 1;
 
         /* Get the height of left and right sub trees */
-        lh = height(root->left);
+      /**  lh = height(root->left);
         rh = height(root->right);
 
         if (abs(lh - rh) <= 1 && isBalanced(root->left) && isBalanced(root->right))
@@ -58,7 +88,8 @@ public:
 
         /* If we reach here then
         tree is not height-balanced */
-        return 0;
+    /**    return 0;
     }
 };
+*/
 #endif

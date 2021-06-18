@@ -30,6 +30,22 @@ void timeNeededForSearch(string *q, X dataStructure, string structure, int numbe
     cout << endl << "The time needed for the search in " << structure << " was: " << duration.count() << " microseconds" << endl;
 }
 
+void timeForAVL(string *q, AVLTree dataStructure, int numberOfWords, Node *root){
+    auto start = std::chrono::high_resolution_clock::now();
+    for (int i = 0; i < numberOfWords; i++) {
+        int times = dataStructure.search(root, q[i]);
+        if (times == 1) {
+            cout << "The word: '" << q[i] << "' is shown once in AVL Tree" << endl;
+            continue;
+        } else {
+            cout << "The word: '" << q[i] << "' is shown " << times << " times in AVL Tree "<< endl;
+        }
+    }
+    auto stop = std::chrono::high_resolution_clock::now();
+    auto duration = duration_cast<microseconds>(stop - start);
+    cout << endl << "The time needed for the search in AVL Tree was: " << duration.count() << " microseconds" << endl;
+}
+
 int main() {
     string filename = "small-file.txt";
     string word; //κάθε λέξη του αρχείου
@@ -80,16 +96,16 @@ int main() {
 
     //timeNeededForSearch(q, bst, "Binary Search Tree", qIndex); //BinarySearchTree
 
-    //timeNeededForSearch(q, avl, "AVL Tree", qIndex); //AVLTree
+    //timeForAVL(q, *AVL, qIndex, rt); //AVLTree
 
     //timeNeededForSearch(q, table, "HashTable", qIndex); //HashTable
 
-    string s = "zeitschrift";
+    //string s = "zeitschrift";
     //rt = AVL->remove(rt, s);
 
-    AVL->printInOrder();
+    //AVL->printInOrder();
 
-    cout << AVL->isBalanced(AVL->getRoot());
+    cout << AVL->getBalance(rt);
     file.close(); //κλέισιμο αρχείου
 
     return 0;
