@@ -9,7 +9,7 @@ struct HashNode{
     int address, appearances;
 };
 
-const int size=100000;
+const int N=100000;
 
 class HashTable{
 private:
