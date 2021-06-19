@@ -48,7 +48,7 @@ void timeForAVL(string *q, AVLTree dataStructure, int numberOfWords, Node *root)
 }
 
 int main() {
-    string filename = "small-file.txt";
+    string filename = "small-file.txt"; //ονομα αρχειου αναγνωσης
     string word; //κάθε λέξη του αρχείου
     fstream file;
     file.open(filename.c_str());
