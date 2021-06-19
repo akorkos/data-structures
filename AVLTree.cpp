@@ -20,27 +20,24 @@ int AVLTree::height(Node *N)
 }
 
 //Μέθοδος που επιστρέφει το μεγαλύτερο ακέραιο
-int AVLTree::max(int a, int b)
-{
+int AVLTree::max(int a, int b){
     return (a > b)? a : b;
 }
 
 
 //Μέθοδος που δημιουργεί ένα νέο κόμβο με τη λέξη που δίνεται
-Node* AVLTree::newNode(string key)
-{
+Node* AVLTree::newNode(string key){
     Node* node = new Node();
     node->key = key;
     node->left = nullptr;
     node->right = nullptr;
-    node->appearances=1; //πρώτη εμφάνιση της λέξης στο κείμενο
+    node->appearances = 1; //πρώτη εμφάνιση της λέξης στο κείμενο
     node->height = 1;
     return(node);
 }
 
 //Συνάρτηση που υλοποιεί τη δεξιά περιστροφή
-Node *AVLTree::rightRotate(Node *y)
-{
+Node *AVLTree::rightRotate(Node *y){
     //αρχικοποίηση
     Node *x = y->left;
     Node *T2 = x->right;
@@ -50,18 +47,15 @@ Node *AVLTree::rightRotate(Node *y)
     y->left = T2;
 
     //Αλλαγή heights
-    y->height = max(height(y->left),
-                    height(y->right)) + 1;
-    x->height = max(height(x->left),
-                    height(x->right)) + 1;
+    y->height = max(height(y->left),height(y->right)) + 1;
+    x->height = max(height(x->left),height(x->right)) + 1;
 
     //επιστρέφει τη νέα ρίζα
     return x;
 }
 
 //Μέθοδος που υλοποιεί την αριστερή περιστροφή
-Node *AVLTree::leftRotate(Node *x)
-{
+Node *AVLTree::leftRotate(Node *x){
     //αρχικοποίηση κόμβων
     Node *y = x->right;
     Node *T2 = y->left;
@@ -71,26 +65,22 @@ Node *AVLTree::leftRotate(Node *x)
     x->right = T2;
 
     //αλλαγή heights
-    x->height = max(height(x->left),
-                    height(x->right)) + 1;
-    y->height = max(height(y->left),
-                    height(y->right)) + 1;
+    x->height = max(height(x->left),height(x->right)) + 1;
+    y->height = max(height(y->left),height(y->right)) + 1;
 
     //επιστρέφει τη νέα ρίζα
     return y;
 }
 
 //Επιστρέφει τη διαφορά μεταξύ των υψών του αριστερού και του δεξιού υποδένδρου
-int AVLTree::getBalance(Node *N)
-{
+int AVLTree::getBalance(Node *N){
     if (N == nullptr)
         return 0;
     return height(N->left) - height(N->right);
 }
 
 //Μέθοδος που υλοποιεί την εισαγωγή
-Node* AVLTree::insert(Node* node, string key)
-{
+Node* AVLTree::insert(Node* node, string key){
     if (node == nullptr) //δημιουργείται νέου κόμβου
         return(newNode(key));
 
@@ -104,13 +94,10 @@ Node* AVLTree::insert(Node* node, string key)
     }
 
     //αλλαγή heights
-    node->height = 1 + max(height(node->left),
-                           height(node->right));
-
+    node->height = 1 + max(height(node->left),height(node->right));
 
     //Διαφορά υψών μεταξύ υποδένδρων - έλεγχος αν το δένδρο παραμένει ισορροπημένο
     int balance = getBalance(node);
-
 
     // Left Left Case
     if (balance > 1 && key < node->left->key)
@@ -121,15 +108,13 @@ Node* AVLTree::insert(Node* node, string key)
         return leftRotate(node);
 
     // Left Right Case
-    if (balance > 1 && key > node->left->key)
-    {
+    if (balance > 1 && key > node->left->key){
         node->left = leftRotate(node->left);
         return rightRotate(node);
     }
 
     // Right Left Case
-    if (balance < -1 && key < node->right->key)
-    {
+    if (balance < -1 && key < node->right->key){
         node->right = rightRotate(node->right);
         return leftRotate(node);
     }
@@ -137,46 +122,37 @@ Node* AVLTree::insert(Node* node, string key)
     return node;
 }
 
-//υλοποίηση pre-order εμφάνισης
-void AVLTree::preOrder(Node *root)
-{
-    if(root != nullptr)
-    {
-        cout << root->key << " ";
-        preOrder(root->left);
-        preOrder(root->right);
-    }
-}
-
-//υλοποίηση post-order εμφάνισης
-void AVLTree::printPostorder(Node* root)
-{
-    if (root == nullptr)
+void AVLTree::printInOrder(Node *pos) {
+    if (pos == nullptr)
         return;
 
-    printPostorder(root->left);
-
-    printPostorder(root->right);
-
-    cout << root->key << " ";
+    printInOrder(pos->left);
+    cout << pos->key << " : " << pos->appearances << endl;
+    printInOrder(pos->right);
 }
 
-//υλοποίηση in-order εμφάνισης
-void AVLTree::printInorder(Node* root)
-{
-    if (root == nullptr)
+
+void AVLTree::printPreOrder(Node *pos) {
+    if (pos == nullptr)
         return;
 
-    printInorder(root->left);
-
-    cout << root->key << " ";
-
-    printInorder(root->right);
+    cout << pos->key << " : " << pos->appearances << endl;
+    printPreOrder(pos->left);
+    printPreOrder(pos->right);
 }
+
+void AVLTree::printPostOrder(Node *pos) {
+    if (pos == nullptr)
+        return;
+
+    printPostOrder(pos->left);
+    printPostOrder(pos->right);
+    cout << pos->key << " : " << pos->appearances << endl;
+}
+
 
 //μέθοδος που επιστρέφει τη μικρότερη τιμή που υπάρχει στο δένδρο
-Node * AVLTree::minValueNode(Node* node)
-{
+Node * AVLTree::minValueNode(Node* node){
     Node* current = node;
 
     //βρόχος για να βρεθεί το αριστερό φύλλο του δένδρου
@@ -187,18 +163,13 @@ Node * AVLTree::minValueNode(Node* node)
 }
 
 //μέθοδος που υλοποιεί την αναζήτηση
-int AVLTree::search(Node* root, string key)
-{
+int AVLTree::search(Node* root, string key){
 
-    if(root== nullptr)
-    {
+    if(root == nullptr)
         return 0;
-    }
 
     if (root->key == key)
-    {
         return root->appearances;
-    }
 
     if (root->key < key)
         return search(root->right, key);
@@ -207,24 +178,22 @@ int AVLTree::search(Node* root, string key)
 }
 
 //μέθοδος που υλοποιεί την διαγραφή
-Node* AVLTree::deleteNode(Node* root, string key)
-{
+Node* AVLTree::remove(Node* root, string key){
     if (root == nullptr)
         return root;
 
     if ( key < root->key )//αν η λέξη που θέλουμε να διαγραφεί είναι μικρότερη από τη λέξη του κόμβου, τότε βρίσκεται στο αριστερό υποδένδρο
-        root->left = deleteNode(root->left, key);
+        root->left = remove(root->left, key);
     else if( key > root->key ) //αν η λέξη που θέλουμε να διαγραφεί είναι μεγαλύτερη από τη λέξη του κόμβου, τότε βρίσκεται στο δεξί υποδένδρο
-        root->right = deleteNode(root->right, key);
+        root->right = remove(root->right, key);
     else //η περίπτωση στην οποία βρέθηκε ο κόμβος με τη λέξη που δίνεται - ο κόμβος που θα διαγραφεί
     {
-        if( (root->left == nullptr) || (root->right == nullptr) ) //κόμβος με ένα ή κανένα παιδί
-        {
+        //κόμβος με ένα ή κανένα παιδί
+        if((root->left == nullptr) || (root->right == nullptr)){
             Node *temp = root->left ? root->left : root->right;
 
             //η περίπτωση που δεν έχει κανένα παιδί
-            if (temp == nullptr)
-            {
+            if (temp == nullptr){
                 temp = root;
                 root = nullptr;
             }
@@ -241,7 +210,7 @@ Node* AVLTree::deleteNode(Node* root, string key)
             root->appearances = temp->appearances;
 
             //διαγραφή στο δεξί υποδένδρο
-            root->right = deleteNode(root->right, temp->key);
+            root->right = remove(root->right, temp->key);
         }
     }
 
@@ -249,8 +218,7 @@ Node* AVLTree::deleteNode(Node* root, string key)
         return root;
 
     // αλλαγή height
-    root->height = 1 + max(height(root->left),
-                           height(root->right));
+    root->height = 1 + max(height(root->left),height(root->right));
 
     //Διαφορά υψών μεταξύ υποδένδρων - έλεγχος αν το δένδρο παραμένει ισορροπημένο
     int balance = getBalance(root);
@@ -260,8 +228,7 @@ Node* AVLTree::deleteNode(Node* root, string key)
         return rightRotate(root);
 
     // Left Right Case
-    if (balance > 1 && getBalance(root->left) < 0)
-    {
+    if (balance > 1 && getBalance(root->left) < 0){
         root->left = leftRotate(root->left);
         return rightRotate(root);
     }
@@ -271,8 +238,7 @@ Node* AVLTree::deleteNode(Node* root, string key)
         return leftRotate(root);
 
     // Right Left Case
-    if (balance < -1 && getBalance(root->right) > 0)
-    {
+    if (balance < -1 && getBalance(root->right) > 0){
         root->right = rightRotate(root->right);
         return leftRotate(root);
     }

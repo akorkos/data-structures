@@ -1,7 +1,7 @@
 #include "BinarySearchTree.h"
 
 BinarySearchTree::BinarySearchTree() {
-    root = nullptr;
+    root = nullptr; // αρχικοποίηση της ρίζας, σημαίνει πως το δένδρο δεν δημιουργηθεί ακόμα
 }
 
 BinarySearchTree::~BinarySearchTree() {
@@ -9,7 +9,7 @@ BinarySearchTree::~BinarySearchTree() {
 }
 
 bool BinarySearchTree::insert(string key) {
-    if (root == nullptr) {
+    if (root == nullptr) { //εάν η ρίζα είναι κενή, δηλ. το δένδρο δεν έχει δημιουργηθεί ακόμα γίνεται αρχικοποίηση των πεδίων του struct
         root = new node;
         root->word = key;
         root->appearances = 1;
@@ -22,10 +22,12 @@ bool BinarySearchTree::insert(string key) {
 }
 
 bool BinarySearchTree::insert(node *rt, string key) {
-    if (key == rt->word) {
+    if (key == rt->word) { //εάν η λέξη που πρόκειται να εισαχθεί υπάρχει ήδη αυξάνεται η συχνότητα εμφάνισης της λέξης
         rt->appearances++;
         return true;
     }
+
+    //εάν η λέξη που πρόκειται να εισαχθεί είναι λεξικογραφικά μεγαλύτερη τοποθετείτε στο δεξί κόμβο και γίνεται αρχικοποίηση των πεδίων του struct
     if (key > rt->word) {
         if (rt->right == nullptr) {
             rt->right = new node;
@@ -37,7 +39,7 @@ bool BinarySearchTree::insert(node *rt, string key) {
             return true;
         }
         return insert(rt->right, key);
-    } else {
+    } else { //εάν η λέξη που πρόκειται να εισαχθεί είναι λεξικογραφικά μικρότερη τοποθετείτε στο αριστερο κόμβο και γίνεται αρχικοποίηση των πεδίων του struct
         if (rt->left == nullptr) {
             rt->left = new node;
             rt->left->word = key;
@@ -79,7 +81,7 @@ node *BinarySearchTree::privSearch(string key) {
 bool BinarySearchTree::remove(node *rt) {
     node *parent = rt->parent;
     //έλεγχος αν ο κόμβος έχει παιδιά
-    if (rt->left == nullptr && rt->right == nullptr) {
+    if (rt->left == nullptr && rt->right == nullptr) { //διαγραφη κόμβου με κανενα παιδί
         if (parent == nullptr) { //έλεγχος αν ο κόμβος είναι κενός
             delete (rt);
             root = nullptr;
@@ -90,7 +92,7 @@ bool BinarySearchTree::remove(node *rt) {
             delete (parent->right);
             parent->right = nullptr;
         }
-    } else if (rt->left == nullptr || rt->right == nullptr) {
+    } else if (rt->left == nullptr || rt->right == nullptr) { //διαγραφη κόμβου με ένα παιδί
         if (parent == nullptr) { //έλεγχος αν ο κόμβος είναι κενός
             if (rt->left == nullptr)
                 root = rt->right;
@@ -110,7 +112,7 @@ bool BinarySearchTree::remove(node *rt) {
                 parent->right = rt->left;
             delete (rt);
         }
-    } else {
+    } else { //διαγραφη κόμβου με δύο παιδιά
         node *successor = minimum(rt->right);
         rt->word = successor->word;
         rt->appearances = successor->appearances;

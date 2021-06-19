@@ -81,32 +81,26 @@ int main() {
         }
 
         //εισαγωγή λέξεων από το αρχείο στις 5 δομές
-        //Array->insert(word);
-        //sArray->insert(word);
-        //BST->insert(word);
+        Array->insert(word);
+        sArray->insert(word);
+        BST->insert(word);
         rt = AVL->insert(rt,word);
-        //HASH->insert(word);
+        HASH->insert(word);
     }
 
     //Αναζήτηση όλων των λέξεων του συνόλου Q σε κάθε δομή. Εμφαζίνεται ο χρόνος που χρειάστηκε για την εκτέλεση
     //αναζήτησης της κάθε δομής & πόσες φορές εμφανίζεται η κάθε λέξη
 
-    //timeNeededForSearch(q, unArr, "Unsorted Array", qIndex); //UnsortedArray
+    timeNeededForSearch(q, Array, "Unsorted Array", qIndex); //UnsortedArray
 
-    //timeNeededForSearch(q, sorArr, "Sorted Array", qIndex); //SortedArray
+    timeNeededForSearch(q, sArray, "Sorted Array", qIndex); //SortedArray
 
-    //timeNeededForSearch(q, bst, "Binary Search Tree", qIndex); //BinarySearchTree
+    timeNeededForSearch(q, BST, "Binary Search Tree", qIndex); //BinarySearchTree
 
-    //timeForAVL(q, *AVL, qIndex, rt); //AVLTree
+    timeForAVL(q, *AVL, qIndex, rt); //AVLTree
 
-    //timeNeededForSearch(q, table, "HashTable", qIndex); //HashTable
+    timeNeededForSearch(q, HASH, "HashTable", qIndex); //HashTable
 
-    //string s = "zeitschrift";
-    //rt = AVL->remove(rt, s);
-
-    //AVL->printInOrder();
-
-    cout << AVL->getBalance(rt);
     file.close(); //κλέισιμο αρχείου
 
     return 0;
