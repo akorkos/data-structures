@@ -6,25 +6,21 @@ using namespace std;
 
 struct HashNode{
     string word;
-    int address;
-    int appearances;
+    int address, appearances;
 };
 
 const int size=100000;
 
 class HashTable{
-public:
-    HashTable();
-    ~HashTable();
-
-    void insert(string key); //εισαγωγή λέξης στο hashtable
-    int search(string key, int apps); //αναζήτηση λέξης στο hashtable
-
 private:
     void insert(string key, bool done);
     int findAddress(string key);   //η συνάρτηση μέσω της οποίας βρίσκουμε διεύθυνση για την λέξη
-    HashNode* search(string key);
+    HashNode *privSearch(string key);
     HashNode **root;
+public:
+    HashTable();
+    ~HashTable();
+    void insert(string key); //εισαγωγή λέξης στο hashtable
+    int search(string key); //αναζήτηση λέξης στο hashtable
 };
-
-#endif //DOMES_DEDOMENWN_2021_HASHMAP_H
+#endif

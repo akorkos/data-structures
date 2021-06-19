@@ -5,41 +5,30 @@
 #include <iostream>
 using namespace std;
 
-struct Node
-{
-    string word;
-    Node *right, *left;
-    int appearances, height;
+class Node{
+public:
+    string key;
+    Node *left, *right;
+    int height, appearances;
 };
 
-class AVLTree{
+class AVLTree {
 private:
-    Node *root;
-    Node *insert(Node* rt, string key);
-    Node *search(string key); //αναζήτηση κόμβου με τη λέξη key
-    Node *remove(Node *rt, string key);
-    Node *rRR(Node *rt);
-    Node *rLR(Node *rt);
-    Node *rLL(Node *rt);
-    Node *rRL(Node *rt);
-    Node *minimum(Node *rt);
-    Node *balance(Node *rt);
-    int maximum(int x, int y);
-    int height(Node *rt);
-    int getBalance(Node *rt);
-    void inOrder(Node *pos);
-    void preOrder(Node *pos);
-    void postOrder(Node *pos);
-    void destroy(Node *rt);
+    int getBalance(Node *N);
+    int max(int a, int b);
+    int height(Node *N);
+    Node* newNode(string key);
+    Node * minValueNode(Node* node);
+    Node *rightRotate(Node *y);
+    Node *leftRotate(Node *x);
 public:
     AVLTree();
     ~AVLTree();
-
-    void insert(string key); //εισαγωγή λέξης στο AVL Tree
-    void remove(string key); //διαγραφή κόμβου με τη λέξη key
-    int search(string key, int apps); //αναζήτηση κόμβου με τη λέξη key
-    void printInOrder();
-    void printPreOrder();
-    void printPostOrder();
+    void printInOrder(Node *pos);
+    void printPreOrder(Node *pos);
+    void printPostOrder(Node *pos);
+    int search(Node* root, string key);
+    Node* insert(Node* node, string key);
+    Node* remove(Node* root, string key);
 };
 #endif

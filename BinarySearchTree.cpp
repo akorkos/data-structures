@@ -1,7 +1,7 @@
 #include "BinarySearchTree.h"
 
 BinarySearchTree::BinarySearchTree() {
-    root = nullptr;
+    root = nullptr; // αρχικοποίηση της ρίζας, σημαίνει πως το δένδρο δεν δημιουργηθεί ακόμα
 }
 
 BinarySearchTree::~BinarySearchTree() {
@@ -9,7 +9,7 @@ BinarySearchTree::~BinarySearchTree() {
 }
 
 bool BinarySearchTree::insert(string key) {
-    if (root == nullptr) {
+    if (root == nullptr) { //εάν η ρίζα είναι κενή, δηλ. το δένδρο δεν έχει δημιουργηθεί ακόμα γίνεται αρχικοποίηση των πεδίων του struct
         root = new node;
         root->word = key;
         root->appearances = 1;
@@ -22,10 +22,12 @@ bool BinarySearchTree::insert(string key) {
 }
 
 bool BinarySearchTree::insert(node *rt, string key) {
-    if (key == rt->word) {
+    if (key == rt->word) { //εάν η λέξη που πρόκειται να εισαχθεί υπάρχει ήδη αυξάνεται η συχνότητα εμφάνισης της λέξης
         rt->appearances++;
         return true;
     }
+
+    //εάν η λέξη που πρόκειται να εισαχθεί είναι λεξικογραφικά μεγαλύτερη τοποθετείτε στο δεξί κόμβο και γίνεται αρχικοποίηση των πεδίων του struct
     if (key > rt->word) {
         if (rt->right == nullptr) {
             rt->right = new node;
@@ -37,7 +39,7 @@ bool BinarySearchTree::insert(node *rt, string key) {
             return true;
         }
         return insert(rt->right, key);
-    } else {
+    } else { //εάν η λέξη που πρόκειται να εισαχθεί είναι λεξικογραφικά μικρότερη τοποθετείτε στο αριστερο κόμβο και γίνεται αρχικοποίηση των πεδίων του struct
         if (rt->left == nullptr) {
             rt->left = new node;
             rt->left->word = key;
@@ -51,18 +53,20 @@ bool BinarySearchTree::insert(node *rt, string key) {
     }
 }
 
-int BinarySearchTree::search(string key, int apps) {
-    node *pos = search(key); //καλεί την αντίστοιχη private μέθοδο
+/*
+Πρόκειται για την μέθοδο αναζήτησης που χρησιμοποιείται από τον χρήστη.
+Εάν η λέξη εμφανίζεται μέσα στον πίνακα επιστρέφεται ο αριθμός των εμφανίσεων διαφορετικά, επιστρέφεται η τιμή 0
+*/
+int BinarySearchTree::search(string key) {
+    node *pos = privSearch(key); //καλεί την αντίστοιχη private μέθοδο
     if (pos == nullptr) {
         return 0;
-    } else {
-        apps = pos->appearances;
-        return apps;
-    }
+    } else
+        return pos->appearances;
 }
 
 //αναζήτηση κόμβου με τη λέξη key
-node *BinarySearchTree::search(string key) {
+node *BinarySearchTree::privSearch(string key) {
     node *pos = root;
     while (pos != nullptr && key != pos->word) {
         if (key > pos->word)
@@ -77,7 +81,7 @@ node *BinarySearchTree::search(string key) {
 bool BinarySearchTree::remove(node *rt) {
     node *parent = rt->parent;
     //έλεγχος αν ο κόμβος έχει παιδιά
-    if (rt->left == nullptr && rt->right == nullptr) {
+    if (rt->left == nullptr && rt->right == nullptr) { //διαγραφη κόμβου με κανενα παιδί
         if (parent == nullptr) { //έλεγχος αν ο κόμβος είναι κενός
             delete (rt);
             root = nullptr;
@@ -88,7 +92,7 @@ bool BinarySearchTree::remove(node *rt) {
             delete (parent->right);
             parent->right = nullptr;
         }
-    } else if (rt->left == nullptr || rt->right == nullptr) {
+    } else if (rt->left == nullptr || rt->right == nullptr) { //διαγραφη κόμβου με ένα παιδί
         if (parent == nullptr) { //έλεγχος αν ο κόμβος είναι κενός
             if (rt->left == nullptr)
                 root = rt->right;
@@ -108,7 +112,7 @@ bool BinarySearchTree::remove(node *rt) {
                 parent->right = rt->left;
             delete (rt);
         }
-    } else {
+    } else { //διαγραφη κόμβου με δύο παιδιά
         node *successor = minimum(rt->right);
         rt->word = successor->word;
         rt->appearances = successor->appearances;
@@ -118,7 +122,7 @@ bool BinarySearchTree::remove(node *rt) {
 }
 
 bool BinarySearchTree::remove(string key) {
-    node *hasChild = search(key);
+    node *hasChild = privSearch(key);
     if (hasChild == nullptr) //έλεγχος αν υπάρχει κόμβος με τη λέξη key
         return false;
     else
