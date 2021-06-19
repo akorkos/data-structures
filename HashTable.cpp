@@ -1,14 +1,14 @@
 #include "HashTable.h"
 
 HashTable::HashTable() {
-    root = new HashNode *[size];
-    for (int i = 0; i < size; i++) {
+    root = new HashNode *[N];
+    for (int i = 0; i < N; i++) {
         root[i] = nullptr;
     }
 }
 
 HashTable::~HashTable() {
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < N; i++) {
         delete root[i];
     }
 }
@@ -30,7 +30,7 @@ void HashTable::insert(string key) {
     //μέχρι να βρει άδειο κόμβο ή κόμβο με την ίδια λέξη
     while ((root[step] != nullptr) && (root[step]->word != key)) {
         step++;
-        step %= size;
+        step %= N;
     }
 
     if (root[step] == nullptr) { // άδειος κόμβος, βάζουμε μέσα τα στοιχεία
@@ -48,7 +48,7 @@ HashNode* HashTable::privSearch(string key) {
     int step = findAddress(key);
     while ((root[step] != nullptr) && (root[step]->word != key)) {
         step++;
-        step %= size;
+        step %= N;
     }
     //όταν βρεί την λέξη
     if (root[step]->address == step)
