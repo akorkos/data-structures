@@ -14,3 +14,5 @@ Includes:
 - Binary Search Tree
 - AVL Tree
 - Hash Map
+
+For more information about each structure, see: [Wiki (Greek)](https://github.com/akorkos/Domes-Dedomenwn-2021/wiki)
