@@ -1,4 +1,4 @@
-# Domes-Dedomenwn-2021
+# Data Structures 
 
 A joint effort between Aristea Lachana and Alexandros Korkos. 
 
