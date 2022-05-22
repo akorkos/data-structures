@@ -1,10 +1,10 @@
-# Data Structures Project 2021 
+# Data Structures Assignment
 
 <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/akorkos/Project-in-Data-Structures"> <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/akorkos/Project-in-Data-Structures">
 
 A joint effort between Aristea Lachana and Alexandros Korkos. 
 
-A project for the course "Data Structures" at Aristotle University of Thessaloniki.
+A project for the course [Data Structures](https://elearning.auth.gr/enrol/index.php?id=7947) at the computer science department @[AUTh](https://www.auth.gr/en/)
 
 Each data structure is developed to save a word and the number of appearances of certain word from a .txt file. 
 The functions implemented are search, insert, delete (except Hash Map) and for the Trees inorder, preorder and postorder traversal.
