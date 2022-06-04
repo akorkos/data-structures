@@ -2,14 +2,26 @@
 
 <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/akorkos/Project-in-Data-Structures"> <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/akorkos/Project-in-Data-Structures">
 
-A joint effort between Aristea Lachana and Alexandros Korkos. 
+### Πληροφορίες 
+H εργασία στο μάθημα [Δομές δεδομένων](https://elearning.auth.gr/enrol/index.php?id=7947) του τμήματος πληροφορικής του Α.Π.Θ για το ακαδημαϊκό έτος 2020/21. <br/>
 
-A project for the course [Data Structures](https://elearning.auth.gr/enrol/index.php?id=7947) at the computer science department @[AUTh](https://www.auth.gr/en/)
+Περισσότερες πληροφορίες: [Wiki](https://github.com/akorkos/Project-in-Data-Structures/wiki).
 
-Each data structure is developed to save a word and the number of appearances of certain word from a .txt file. 
-The functions implemented are search, insert, delete (except Hash Map) and for the Trees inorder, preorder and postorder traversal.
+### Περιεχόμενα
 
-Includes:
+- Αταξινόμητο πίνακα,
+- ταξινομημένο πίνακα,
+- απλό δυαδικό δένδρο αναζήτησης,
+- δυαδικό δένδρο αναζήτησης τύπου AVL και
+- πίνακας κατακερματισμού με ανοικτή διεύθυνση.
+
+### Information
+
+Assignment for the course [Data Structures](https://elearning.auth.gr/enrol/index.php?id=7947) (Spring 2020/21) at the computer science department @[AUTh](https://www.auth.gr/en/).
+
+For more information, see: [Wiki **(GR)**](https://github.com/akorkos/Project-in-Data-Structures/wiki).
+
+### Contents
 
 - Unsorted Array
 - Sorted Array
@@ -17,5 +29,4 @@ Includes:
 - AVL Tree
 - Hash Table
 
-For more information about each structure, see: [Wiki (Greek)](https://github.com/akorkos/Domes-Dedomenwn-2021/wiki)
 
