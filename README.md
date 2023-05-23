@@ -1,4 +1,4 @@
-# Data Structures Assignment
+# Data Structures 101
 
 <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/akorkos/Project-in-Data-Structures"> <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/akorkos/Project-in-Data-Structures">
 
