@@ -1,34 +1,31 @@
 # Data Structures 101
 
-<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/akorkos/Project-in-Data-Structures"> <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/akorkos/Project-in-Data-Structures">
+This repository, includes some well known Data Structures. They were developed, in the course [Data Structures [NCO-02-03]](https://elearning.auth.gr/enrol/index.php?id=7947) (2020/21) of the Department of Computer Science at Aristotle University of Thessaloniki.
+## Description
 
-### Πληροφορίες 
-H εργασία ([Εκφώνηση της *εργασίας*](https://github.com/akorkos/Project-in-Data-Structures/raw/main/ds-project-2020-2021.pdf)) στο μάθημα [Δομές δεδομένων](https://elearning.auth.gr/enrol/index.php?id=7947) του τμήματος πληροφορικής του Α.Π.Θ για το ακαδημαϊκό έτος 2020/21. <br/>
+The data structures implemented are:
 
-Περισσότερες πληροφορίες: [Wiki](https://github.com/akorkos/Project-in-Data-Structures/wiki).
+- Unsorted array,
+- Sorted array,
+- Simple binary search tree,
+- AVL binary search tree, and
+- Hash table with open addressing.
 
-### Περιεχόμενα
+These structures should store the different words of the text and the frequency of each word within the text. We assume that a word w1 is smaller than a word w2 when w1 comes before w2 in lexicographical order. For example, "that" < "this", "apple" < "cat", "over" < "under", etc. The text you will work on is from the [Gutenberg Project](https://www.gutenberg.org/) and contains well-known works of world literature.
 
-- Αταξινόμητο πίνακα,
-- ταξινομημένο πίνακα,
-- απλό δυαδικό δένδρο αναζήτησης,
-- δυαδικό δένδρο αναζήτησης τύπου AVL και
-- πίνακας κατακερματισμού με ανοικτή διεύθυνση.
+Furthermore, the program supports the following operations for the data structures: 
 
-### Information
+- insertion, 
+- deletion, 
+- search
 
-Assignment ([*Assignment* description](https://github.com/akorkos/Project-in-Data-Structures/raw/main/ds-project-2020-2021.pdf)) for the course [Data Structures](https://elearning.auth.gr/enrol/index.php?id=7947) (Spring 2020/21) at the computer science department @[AUTh](https://www.auth.gr/en/).
+and for the tree structures, additionally, inorder, preorder, and postorder traversal. For the hash table, only insertion and search (deletion is not implemented). 
 
+It should also be noted that when working with text, preprocessing is performed. For example, we  convert uppercase letters to lowercase (because, for example, the word "This" is the same as the word "this") and remove punctuation marks.
 
+More information about the implementation, can be seen on the Wiki of the repository.
+## Authors
 
-For more information, see: [Wiki **(GR)**](https://github.com/akorkos/Project-in-Data-Structures/wiki).
-
-### Contents
-
-- Unsorted Array
-- Sorted Array
-- Binary Search Tree
-- AVL Tree
-- Hash Table
-
+- [@akorkos](https://www.github.com/akorkos)
+- [@AristeaLachana](https://github.com/AristeaLachana)
 
